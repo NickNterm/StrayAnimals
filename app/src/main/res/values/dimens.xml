@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="splash_screen_logo_size">200dp</dimen>
+    <dimen name="splash_screen_title_size">30sp</dimen>
+    <dimen name="intro_title_size">25sp</dimen>
+    <dimen name="intro_title_margin">10dp</dimen>
+    <dimen name="intro_image_size">250dp</dimen>
+    <dimen name="intro_message_margin">20dp</dimen>
+    <dimen name="intro_message_text_size">17sp</dimen>
+    <dimen name="button_radius">7dp</dimen>
+    <dimen name="intro_button_horizontal_margin">20dp</dimen>
+    <dimen name="intro_button_vertical_margin">10dp</dimen>
+    <dimen name="card_view_radius">7dp</dimen>
+    <dimen name="card_view_elevation">10dp</dimen>
+    <dimen name="sign_card_view_margin">20dp</dimen>
+    <dimen name="ll_in_card_view_padding">10dp</dimen>
+    <dimen name="ll_in_card_inside_margin">5dp</dimen>
+    <dimen name="sign_button_in_card_vertical_margin">10dp</dimen>
+    <dimen name="progress_dialog_padding">5dp</dimen>
+</resources>

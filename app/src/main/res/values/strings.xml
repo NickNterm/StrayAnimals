@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">StrayAnimals</string>
+    <string name="app_name">Stray Animals</string>
+    <string name="intro_text_message">Welcome to Stray Animals App!!!\nThis app is all about helping stray animals to find a place to live</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="repeat">Repeat</string>
+    <string name="name">Name</string>
+    <string name="email_cant_be_empty">Email cannot be empty</string>
+    <string name="password_cant_be_empty">Password cannot be empty</string>
+    <string name="name_cant_be_empty">Name cannot be empty</string>
+    <string name="passwords_dont_match">Passwords do not match</string>
+    <string name="error_while_creating_user">Error while creating user</string>
 </resources>

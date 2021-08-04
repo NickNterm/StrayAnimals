@@ -13,4 +13,26 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="MyTheme" parent="Theme.MaterialComponents.NoActionBar">
+
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryColor</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/cardview_dark_background</item>
+
+        <item name="cardBackgroundColor">@color/element_dark</item>
+        <item name="background">@color/background_dark</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/toolbar_background_dark</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="toolbarStyle" parent="Theme.AppCompat">
+        <item name="android:background">@color/toolbar_background_dark</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="titleTextColor">@color/white</item>
+    </style>
 </resources>

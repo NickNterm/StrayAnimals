@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".activities.IntroActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/intro_title_margin"
+        android:text="@string/app_name"
+        android:textSize="@dimen/intro_title_size"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="@dimen/intro_image_size"
+        android:layout_height="@dimen/intro_image_size"
+        android:src="@drawable/ic_animal_shelter" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/intro_message_margin"
+        android:gravity="center"
+        android:text="@string/intro_text_message"
+        android:textSize="@dimen/intro_message_text_size" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_intro_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/intro_button_horizontal_margin"
+        android:layout_marginTop="@dimen/intro_button_vertical_margin"
+        android:background="@drawable/solid_button_rounded"
+        android:foreground="?attr/selectableItemBackground"
+        android:textColor="@color/white"
+        android:text="@string/sign_in" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_intro_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/intro_button_horizontal_margin"
+        android:layout_marginTop="@dimen/intro_button_vertical_margin"
+        android:background="@drawable/stroke_button_rounded"
+        android:foreground="?attr/selectableItemBackground"
+        android:text="@string/sign_up" />
+
+</LinearLayout>

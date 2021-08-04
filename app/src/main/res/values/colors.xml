@@ -7,4 +7,17 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="primaryColor">#4f86d0</color>
+
+    <color name="icon_stroke_color">@color/primaryColor</color>
+
+    <color name="toolbar_background_dark">#1f1f1f</color>
+    <color name="element_dark">#1D1D1D</color>
+    <color name="background_dark">#121212</color>
+
+    <color name="text_color">#1C1C1C</color>
+    <color name="icon_background">@color/background_dark</color>
+
+    <color name="ErrorMessage">#D63E39</color>
 </resources>
