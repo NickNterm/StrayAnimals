@@ -32,7 +32,13 @@ class SignUpActivity : BaseActivity() {
             }
         }
     }
-    fun errorInCreatingUser(){
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, IntroActivity::class.java))
+        finish()
+    }
+
+    fun errorInCreatingUser() {
         hideProgressDialog()
         showErrorInSnackBar(resources.getString(R.string.error_while_creating_user))
     }
@@ -89,7 +95,7 @@ class SignUpActivity : BaseActivity() {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back_ios_24)
 
         toolbar_sign_up.setNavigationOnClickListener {
-            startActivity(Intent(this,IntroActivity::class.java))
+            startActivity(Intent(this, IntroActivity::class.java))
             finish()
         }
     }

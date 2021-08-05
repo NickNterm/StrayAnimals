@@ -17,4 +17,14 @@
     <dimen name="ll_in_card_inside_margin">5dp</dimen>
     <dimen name="sign_button_in_card_vertical_margin">10dp</dimen>
     <dimen name="progress_dialog_padding">5dp</dimen>
+    <dimen name="account_image_size">80dp</dimen>
+    <dimen name="account_image_border">1dp</dimen>
+    <dimen name="account_ll_margin">10dp</dimen>
+    <dimen name="account_text_vertical_margin">5dp</dimen>
+    <dimen name="small_button_text_size">14sp</dimen>
+    <dimen name="small_button_horizontal_padding">10dp</dimen>
+    <dimen name="account_no_posts_text_size">25sp</dimen>
+    <dimen name="maps_button_margin">30dp</dimen>
+    <dimen name="account_view_margin_horizontal">10dp</dimen>
+    <dimen name="account_view_margin_top">10dp</dimen>
 </resources>

@@ -12,4 +12,19 @@
     <string name="name_cant_be_empty">Name cannot be empty</string>
     <string name="passwords_dont_match">Passwords do not match</string>
     <string name="error_while_creating_user">Error while creating user</string>
+    <string name="upload">Upload</string>
+    <string name="home">Home</string>
+    <string name="account">Account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="you_have_been_blocked">You have been blocked. Contact: strayanimalsdeveloper@gmail.com</string>
+    <string name="edit_account">Edit Account</string>
+    <string name="no_posts_found">No Posts Found</string>
+    <string name="account_email">"Email: "</string>
+    <string name="account_posts">"Posts: "</string>
+    <string name="account_phone">"Phone: "</string>
+    <string name="account_name">"Name: "</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="select">Select</string>
+    <string name="pick_location">Pick Location</string>
 </resources>
