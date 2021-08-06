@@ -4,9 +4,12 @@ import android.app.Activity
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.iqsoft.strayanimals.activities.MainActivity
 import com.iqsoft.strayanimals.activities.SignInActivity
 import com.iqsoft.strayanimals.activities.SignUpActivity
 import com.iqsoft.strayanimals.activities.SplashScreen
+import com.iqsoft.strayanimals.fragments.UploadFragment
+import com.iqsoft.strayanimals.models.Post
 import com.iqsoft.strayanimals.models.User
 import com.iqsoft.strayanimals.utils.Constants
 
@@ -45,11 +48,44 @@ class FirestoreClass() {
                 val user = document.toObject(User::class.java)!!
                 if (activity is SplashScreen) {
                     activity.userIsLoaded(user)
-                }else if(activity is SignInActivity){
+                } else if (activity is SignInActivity) {
+                    activity.userIsLoaded(user)
+                } else if (activity is MainActivity) {
                     activity.userIsLoaded(user)
                 }
             }.addOnFailureListener {
-                Toast.makeText(activity.baseContext, "there is no internet", Toast.LENGTH_LONG).show()
+                Toast.makeText(activity.baseContext, "there is no internet", Toast.LENGTH_LONG)
+                    .show()
+            }
+    }
+
+    fun selectUserByIdForPost(activity: Activity, id: String) {
+        mFirebase.collection(Constants.USERS)
+            .document(id)
+            .get()
+            .addOnSuccessListener { document ->
+                val user = document.toObject(User::class.java)!!
+                if (activity is MainActivity) {
+                    activity.userIsLoaded(user)
+                }
+            }.addOnFailureListener {
+                Toast.makeText(activity.baseContext, "there is no internet", Toast.LENGTH_LONG)
+                    .show()
+            }
+    }
+
+    fun uploadPost(activity: Activity, post: Post) {
+        mFirebase.collection(Constants.POSTS)
+            .document()
+            .set(post)
+            .addOnSuccessListener {
+                if (activity is MainActivity) {
+                    activity.postUploaded()
+                }
+            }.addOnFailureListener {
+                if (activity is MainActivity) {
+                    activity.hideProgressDialog()
+                }
             }
     }
 }

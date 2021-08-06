@@ -13,8 +13,8 @@ data class Location(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeDouble(longitude)
         parcel.writeDouble(latitude)
+        parcel.writeDouble(longitude)
     }
 
     override fun describeContents(): Int {

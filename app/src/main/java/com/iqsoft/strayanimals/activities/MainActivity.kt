@@ -1,17 +1,24 @@
 package com.iqsoft.strayanimals.activities
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.iqsoft.strayanimals.R
+import com.iqsoft.strayanimals.firebase.FirestoreClass
 import com.iqsoft.strayanimals.fragments.AccountFragment
 import com.iqsoft.strayanimals.fragments.UploadFragment
+import com.iqsoft.strayanimals.models.Post
 import com.iqsoft.strayanimals.models.User
 import com.iqsoft.strayanimals.utils.Constants
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_upload.*
+import java.io.IOException
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var accountFragment: AccountFragment
     private lateinit var uploadFragment: UploadFragment
     private lateinit var mainFragment: AccountFragment
@@ -56,8 +63,33 @@ class MainActivity : AppCompatActivity() {
         activeFragment = MyFragment
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == Constants.PICK_IMAGE_CODE && data!!.data != null) {
+            uploadFragment.setSelectedImage(data.data!!)
+        }
+    }
+
     private fun getIntents() {
         mUser = intent.getParcelableExtra(Constants.INTENT_USER)!!
         Log.e("testt", mUser.toString())
+    }
+
+    fun refreshAccount() {
+        FirestoreClass().getMyUser(this)
+    }
+
+    fun userIsLoaded(user: User) {
+        mUser = user
+        accountFragment.updateUser(mUser)
+    }
+
+    fun uploadPost(post: Post) {
+        FirestoreClass().uploadPost(this, post)
+    }
+
+    fun postUploaded() {
+        hideProgressDialog()
+        showFragment(accountFragment)
     }
 }

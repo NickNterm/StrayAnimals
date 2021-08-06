@@ -33,7 +33,7 @@
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="40dp"
         android:src="@drawable/ic_marker"
         map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="@+id/map"
