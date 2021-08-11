@@ -1,27 +1,31 @@
 package com.iqsoft.strayanimals.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.iqsoft.strayanimals.R
+import com.iqsoft.strayanimals.activities.MainActivity
+import com.iqsoft.strayanimals.adapters.PostListAdapter
+import com.iqsoft.strayanimals.models.Post
+import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_main.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class MainFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    private var mAdapter: PostListAdapter? = null
+    private var mPostList: ArrayList<Post> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            mPostList = it.getParcelableArrayList(ARG_PARAM1)!!
         }
     }
 
@@ -29,26 +33,36 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        val view = inflater.inflate(R.layout.fragment_main, container, false)
+        view.rv_feed.layoutManager = LinearLayoutManager(activity)
+        view.feed_refresh.setOnRefreshListener {
+            (activity as MainActivity).refreshPosts()
+        }
+        mAdapter = PostListAdapter(requireContext(), mPostList)
+        view.rv_feed.adapter = mAdapter
+        return view
     }
 
+    fun refreshPosts(posts: ArrayList<Post>) {
+        val dif = posts.size - mPostList.size
+        Log.e("testt", dif.toString())
+        if (dif != 0) {
+            for (i in 0 until dif) {
+                mPostList.add(i, posts[i])
+                mAdapter!!.notifyItemInserted(i)
+            }
+        }
+        rv_feed.scrollToPosition(0)
+        feed_refresh.isRefreshing = false
+    }
+
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MainFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(list: ArrayList<Post>) =
             MainFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putParcelableArrayList(ARG_PARAM1, list)
                 }
             }
     }

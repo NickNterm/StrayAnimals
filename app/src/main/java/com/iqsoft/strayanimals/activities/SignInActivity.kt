@@ -70,10 +70,7 @@ class SignInActivity : BaseActivity() {
 
     fun userIsLoaded(user: User) {
         if (user.block == 0) {
-            val intent = Intent(this, MainActivity::class.java)
-
-            intent.putExtra(Constants.INTENT_USER, user)
-
+            val intent = Intent(this, SplashScreen::class.java)
             startActivity(intent)
             finish()
         } else {

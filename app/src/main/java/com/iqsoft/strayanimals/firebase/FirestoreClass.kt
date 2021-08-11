@@ -1,6 +1,7 @@
 package com.iqsoft.strayanimals.firebase
 
 import android.app.Activity
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -59,18 +60,50 @@ class FirestoreClass() {
             }
     }
 
-    fun selectUserByIdForPost(activity: Activity, id: String) {
-        mFirebase.collection(Constants.USERS)
-            .document(id)
+    fun readAccountPosts(activity: Activity, id: String) {
+        mFirebase.collection(Constants.POSTS)
+            .orderBy(Constants.POST_TIME)
+            .whereEqualTo(Constants.POST_CREATED_BY, id)
             .get()
             .addOnSuccessListener { document ->
-                val user = document.toObject(User::class.java)!!
-                if (activity is MainActivity) {
-                    activity.userIsLoaded(user)
+                val postList: ArrayList<Post> = ArrayList()
+
+                for (i in document.documents) {
+                    val post = i.toObject(Post::class.java)!!
+                    post.id = i.id
+                    postList.add(post)
+                }
+                postList.reverse()
+                if (activity is SplashScreen) {
+                    activity.allPostsLoaded(postList)
+                } else if (activity is MainActivity) {
+                    activity.allPostsLoaded(postList)
                 }
             }.addOnFailureListener {
-                Toast.makeText(activity.baseContext, "there is no internet", Toast.LENGTH_LONG)
-                    .show()
+                Log.e("test", it.toString())
+
+            }
+    }
+
+    fun readPosts(activity: Activity, limit: Long = 50) {
+        mFirebase.collection(Constants.POSTS)
+            .orderBy(Constants.POST_TIME)
+            .limitToLast(limit)
+            .get()
+            .addOnSuccessListener { document ->
+                val postList: ArrayList<Post> = ArrayList()
+
+                for (i in document.documents) {
+                    val post = i.toObject(Post::class.java)!!
+                    post.id = i.id
+                    postList.add(post)
+                }
+                postList.reverse()
+                if (activity is SplashScreen) {
+                    activity.postsLoaded(postList)
+                } else if (activity is MainActivity) {
+                    activity.postsLoaded(postList)
+                }
             }
     }
 

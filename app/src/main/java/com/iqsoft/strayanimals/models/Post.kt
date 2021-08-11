@@ -4,13 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Post(
-    val id: String = "",
+    var id: String = "",
     val createdBy: String = "",
     val description: String = "",
     val image: ArrayList<String> = ArrayList(),
     val animal: String = "",
     val postedTime: Long = 0,
-    val likes: Int = 0,
+    val likeIdList: ArrayList<String> = ArrayList(),
     val location: Location = Location(),
     val lost: Int = 0,
     val found: Int = 0
@@ -22,7 +22,7 @@ data class Post(
         parcel.createStringArrayList()!!,
         parcel.readString()!!,
         parcel.readLong(),
-        parcel.readInt(),
+        parcel.createStringArrayList()!!,
         parcel.readParcelable(Location.javaClass.classLoader)!!,
         parcel.readInt(),
         parcel.readInt()
@@ -36,7 +36,7 @@ data class Post(
         parcel.writeStringList(image)
         parcel.writeString(animal)
         parcel.writeLong(postedTime)
-        parcel.writeInt(likes)
+        parcel.writeStringList(likeIdList)
         parcel.writeParcelable(location,0)
         parcel.writeInt(lost)
         parcel.writeInt(found)

@@ -13,10 +13,14 @@ object Constants {
     const val USER_EMAIL = "email"
 
     const val POSTS = "Posts"
+    const val POST_TIME = "postedTime"
+    const val POST_CREATED_BY = "createdBy"
 
     const val LOCATIONS = "Locations"
 
     const val INTENT_USER = "User"
+    const val INTENT_POSTS = "Posts"
+    const val INTENT_ACCOUNT_POSTS= "accountPosts"
     const val INTENT_LOCATION = "Location"
 
     const val SELECT_LOCATION_CODE = 2

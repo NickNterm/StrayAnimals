@@ -62,7 +62,7 @@ class UploadFragment : Fragment() {
         }
     }
 
-    fun setSelectedImage(data: Uri){
+    fun setSelectedImage(data: Uri) {
         mImageUri = data
         try {
             Glide
@@ -139,7 +139,7 @@ class UploadFragment : Fragment() {
                             imageArrayList,
                             mAnimal,
                             System.currentTimeMillis(),
-                            0,
+                            ArrayList(),
                             mLocation,
                             lost,
                             found
@@ -184,6 +184,14 @@ class UploadFragment : Fragment() {
             }
             TextUtils.isEmpty(mAnimal) -> {
                 (activity as MainActivity).showErrorInSnackBar(resources.getString(R.string.select_animal))
+                false
+            }
+            TextUtils.isEmpty(et_upload_description.text.toString()) -> {
+                (activity as MainActivity).showErrorInSnackBar(resources.getString(R.string.fill_description))
+                false
+            }
+            TextUtils.isEmpty(tv_upload_location.text.toString()) -> {
+                (activity as MainActivity).showErrorInSnackBar(resources.getString(R.string.select_location))
                 false
             }
             tv_upload_location.text.toString() == "Invalid Location" -> {

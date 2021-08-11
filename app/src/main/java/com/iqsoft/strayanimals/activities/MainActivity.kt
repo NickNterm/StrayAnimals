@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.iqsoft.strayanimals.R
 import com.iqsoft.strayanimals.firebase.FirestoreClass
 import com.iqsoft.strayanimals.fragments.AccountFragment
+import com.iqsoft.strayanimals.fragments.MainFragment
 import com.iqsoft.strayanimals.fragments.UploadFragment
 import com.iqsoft.strayanimals.models.Post
 import com.iqsoft.strayanimals.models.User
@@ -21,17 +22,19 @@ import java.io.IOException
 class MainActivity : BaseActivity() {
     private lateinit var accountFragment: AccountFragment
     private lateinit var uploadFragment: UploadFragment
-    private lateinit var mainFragment: AccountFragment
+    private lateinit var mainFragment: MainFragment
     private lateinit var activeFragment: Fragment
     private lateinit var mUser: User
+    private lateinit var mPostList: ArrayList<Post>
+    private lateinit var mAccountPostList: ArrayList<Post>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         getIntents()
-        accountFragment = AccountFragment.newInstance(mUser)
+        accountFragment = AccountFragment.newInstance(mUser, mAccountPostList)
         uploadFragment = UploadFragment.newInstance()
-        mainFragment = AccountFragment.newInstance(mUser)
+        mainFragment = MainFragment.newInstance(mPostList)
         supportFragmentManager.beginTransaction()
             .add(R.id.main_activity_fragment, accountFragment, "3").hide(accountFragment).commit()
         supportFragmentManager.beginTransaction()
@@ -72,11 +75,28 @@ class MainActivity : BaseActivity() {
 
     private fun getIntents() {
         mUser = intent.getParcelableExtra(Constants.INTENT_USER)!!
-        Log.e("testt", mUser.toString())
+        mPostList = intent.getParcelableArrayListExtra<Post>(Constants.INTENT_POSTS)!!
+        mAccountPostList = intent.getParcelableArrayListExtra<Post>(Constants.INTENT_ACCOUNT_POSTS)!!
+    }
+
+    fun refreshPosts(){
+        FirestoreClass().readPosts(this)
+    }
+
+    fun postsLoaded(posts: ArrayList<Post>){
+        mainFragment.refreshPosts(posts)
     }
 
     fun refreshAccount() {
         FirestoreClass().getMyUser(this)
+    }
+
+    fun refreshAccountPosts(){
+        FirestoreClass().readAccountPosts(this, FirestoreClass().getCurrentUserId())
+    }
+
+    fun allPostsLoaded(accountPosts: ArrayList<Post>){
+        accountFragment.updatePosts(accountPosts)
     }
 
     fun userIsLoaded(user: User) {
@@ -90,6 +110,7 @@ class MainActivity : BaseActivity() {
 
     fun postUploaded() {
         hideProgressDialog()
-        showFragment(accountFragment)
+        showFragment(mainFragment)
+        bottom_navigation_main_activity.selectedItemId = R.id.home_page
     }
 }
