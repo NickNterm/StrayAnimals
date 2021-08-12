@@ -52,11 +52,10 @@ class UploadFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.SELECT_LOCATION_CODE && resultCode == Activity.RESULT_OK) {
-
             if (data!!.hasExtra(Constants.INTENT_LOCATION)) {
                 mLocation = data.getParcelableExtra(Constants.INTENT_LOCATION)!!
                 tv_upload_location.setText(
-                    getAddress(mLocation.latitude, mLocation.longitude)
+                    Constants.getAddress(requireActivity(), mLocation.latitude, mLocation.longitude)
                 )
             }
         }
@@ -178,7 +177,7 @@ class UploadFragment : Fragment() {
                 (activity as MainActivity).showErrorInSnackBar(resources.getString(R.string.select_lost_or_found))
                 false
             }
-            TextUtils.isEmpty(mImageUri.toString()) -> {
+            mImageUri == null-> {
                 (activity as MainActivity).showErrorInSnackBar(resources.getString(R.string.select_image))
                 false
             }
@@ -237,25 +236,6 @@ class UploadFragment : Fragment() {
 
         }
         popup.show()
-    }
-
-    private fun getAddress(lat: Double, lng: Double): String {
-        val geocoder = Geocoder(activity, Locale.getDefault())
-        try {
-            val addresses: List<Address> = geocoder.getFromLocation(lat, lng, 1)
-            val obj: Address = addresses[0]
-            var countryName = "Location is Invalid"
-            if (!obj.countryName?.trimIndent().isNullOrEmpty() && !obj.locality?.trimIndent()
-                    .isNullOrEmpty()
-            ) {
-                countryName = obj.countryName.trimIndent() + ", " + obj.locality.trimIndent()
-            }
-            return countryName
-        } catch (e: IOException) {
-            e.printStackTrace()
-            Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
-        }
-        return "NotFound"
     }
 
     companion object {

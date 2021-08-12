@@ -39,4 +39,9 @@
     <string name="select_location">Please select location</string>
     <string name="phone">Phone</string>
     <string name="fill_description">Fill Description</string>
+    <string name="title_activity_show_location">ShowLocationActivity</string>
+    <string name="call">Call</string>
+    <string name="save">Save</string>
+    <string name="phone_cant_be_empty">Phone cannot be empty</string>
+    <string name="phone_is_not_valid">Phone is not valid</string>
 </resources>

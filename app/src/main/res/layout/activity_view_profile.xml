@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.ViewProfileActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_view_profile"
+            style="@style/toolbarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/view_account_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/account_ll_margin">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_view_account_profile"
+                        android:layout_width="@dimen/account_image_size"
+                        android:layout_height="@dimen/account_image_size"
+                        android:src="@drawable/ic_account_placeholder" />
+
+                    <TextView
+                        android:id="@+id/tv_view_account_posts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        tools:text="Posts: 12" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_view_account_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/account_text_vertical_margin"
+                    tools:text="Name: Nikolas Ntermaris" />
+
+
+                <TextView
+                    android:id="@+id/tv_view_account_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/account_text_vertical_margin"
+                    android:layout_weight="1"
+                    tools:text="Phone: 6988710546" />
+
+
+                <TextView
+                    android:id="@+id/tv_view_account_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="@dimen/account_text_vertical_margin"
+                    android:layout_weight="1"
+                    tools:text="Email: nikolasderm@gmail.com" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_view_account_call"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="@dimen/account_text_vertical_margin"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="@dimen/view_account_button_margin_end"
+                        android:background="@drawable/stroke_button_rounded"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:paddingHorizontal="@dimen/small_button_horizontal_padding"
+                        android:text="@string/call"
+                        android:textSize="@dimen/small_button_text_size" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_view_account_email"
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="@dimen/account_text_vertical_margin"
+                        android:layout_weight="1"
+                        android:background="@drawable/stroke_button_rounded"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:paddingHorizontal="@dimen/small_button_horizontal_padding"
+                        android:text="@string/email"
+                        android:textSize="@dimen/small_button_text_size" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="@dimen/account_view_margin_horizontal"
+                android:layout_marginVertical="@dimen/account_view_margin_top"
+                android:background="@color/primaryColor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_view_account_posts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_view_account_no_posts_found"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/no_posts_found"
+                android:textSize="@dimen/account_no_posts_text_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</LinearLayout>

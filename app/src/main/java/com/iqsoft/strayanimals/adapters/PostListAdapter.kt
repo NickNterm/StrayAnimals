@@ -1,6 +1,7 @@
 package com.iqsoft.strayanimals.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.iqsoft.strayanimals.R
+import com.iqsoft.strayanimals.activities.ShowLocationActivity
+import com.iqsoft.strayanimals.activities.ViewProfileActivity
 import com.iqsoft.strayanimals.models.Post
 import com.iqsoft.strayanimals.models.User
 import com.iqsoft.strayanimals.utils.Constants
@@ -45,6 +48,19 @@ class PostListAdapter(
                         .placeholder(R.drawable.ic_baseline_loading)
                         .into(holder.itemView.iv_item_post_main_image)
                     holder.itemView.tv_item_post_description.text = model.description
+                    if (context !is ViewProfileActivity) {
+                        holder.itemView.ib_item_post_info.visibility = View.VISIBLE
+                    }
+                    holder.itemView.ib_item_post_info.setOnClickListener {
+                        val intent = Intent(context, ViewProfileActivity::class.java)
+                        intent.putExtra(Constants.INTENT_USER_TO_SHOW, user)
+                        context.startActivity(intent)
+                    }
+                    holder.itemView.ib_item_post_location.setOnClickListener {
+                        val intent = Intent(context, ShowLocationActivity::class.java)
+                        intent.putExtra(Constants.INTENT_LOCATION, model.location)
+                        context.startActivity(intent)
+                    }
                 }
             }
     }

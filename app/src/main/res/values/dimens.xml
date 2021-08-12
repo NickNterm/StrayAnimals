@@ -40,4 +40,8 @@
     <dimen name="post_image_height">400dp</dimen>
     <dimen name="post_item_description_padding">10dp</dimen>
     <dimen name="post_item_button_margin">5dp</dimen>
+    <dimen name="post_item_location_image_size">40dp</dimen>
+    <dimen name="post_item_location_image_margin_end">10dp</dimen>
+    <dimen name="view_account_button_margin_end">10dp</dimen>
+    <dimen name="post_item_post_time_text_size">13sp</dimen>
 </resources>

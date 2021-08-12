@@ -12,15 +12,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.iqsoft.strayanimals.R
+import com.iqsoft.strayanimals.activities.EditProfileActivity
 import com.iqsoft.strayanimals.activities.MainActivity
 import com.iqsoft.strayanimals.activities.MapsActivity
 import com.iqsoft.strayanimals.adapters.PostListAdapter
 import com.iqsoft.strayanimals.firebase.FirestoreClass
 import com.iqsoft.strayanimals.models.Post
 import com.iqsoft.strayanimals.models.User
+import com.iqsoft.strayanimals.utils.Constants
+import kotlinx.android.synthetic.main.activity_view_profile.*
 import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.fragment_account.view.*
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_main.view.*
 
 private const val ARG_PARAM1 = "User"
 private const val ARG_PARAM2 = "AccountPosts"
@@ -46,14 +50,20 @@ class AccountFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_account, container, false)
         view.tv_account_email.text = "${resources.getText(R.string.account_email)}${mUser!!.email}"
         view.tv_account_name.text = "${resources.getText(R.string.account_name)}${mUser!!.name}"
-        view.tv_account_phone.text = "${resources.getText(R.string.account_phone)}${mUser!!.phone}"
-        view.tv_account_posts.text = "${resources.getText(R.string.account_posts)}12"
+        if (mUser!!.phone != 0L) {
+            view.tv_account_phone.text =
+                "${resources.getText(R.string.account_phone)}${mUser!!.phone}"
+        } else {
+            view.tv_account_phone.visibility = View.GONE
+        }
+        view.tv_account_posts.text =
+            "${resources.getText(R.string.account_posts)}${mAccountPostList.size}"
         Glide.with(requireActivity())
             .load(mUser!!.photo)
             .placeholder(R.drawable.ic_account_placeholder)
             .into(view.im_account_profile)
-        view.account_refresh.setProgressBackgroundColorSchemeColor(resources.getColor(R.color.primaryColor))
-        view.account_refresh.setColorSchemeColors(resources.getColor(R.color.white))
+        view.account_refresh.setProgressBackgroundColorSchemeColor(resources.getColor(R.color.black))
+        view.account_refresh.setColorSchemeColors(resources.getColor(R.color.primaryColor))
         mAdapter = PostListAdapter(requireContext(), mAccountPostList)
         view.rv_account_posts.layoutManager = LinearLayoutManager(requireContext())
         view.rv_account_posts.adapter = mAdapter
@@ -66,7 +76,9 @@ class AccountFragment : Fragment() {
             (activity as MainActivity).refreshAccount()
         }
         view.btn_account_edit.setOnClickListener {
-
+            val intent = Intent(requireContext(), EditProfileActivity::class.java)
+            intent.putExtra(Constants.INTENT_USER_TO_EDIT, mUser)
+            startActivity(intent)
         }
         return view
     }
@@ -102,10 +114,16 @@ class AccountFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun updateUI() {
+        if (mUser!!.phone != 0L) {
+            tv_account_phone.text =
+                "${resources.getText(R.string.account_phone)}${mUser!!.phone}"
+        } else {
+            tv_account_phone.visibility = View.GONE
+        }
         tv_account_email.text = "${resources.getText(R.string.account_email)}${mUser!!.email}"
         tv_account_name.text = "${resources.getText(R.string.account_name)}${mUser!!.name}"
-        tv_account_phone.text = "${resources.getText(R.string.account_phone)}${mUser!!.phone}"
-        tv_account_posts.text = "${resources.getText(R.string.account_posts)}12"
+        tv_account_posts.text =
+            "${resources.getText(R.string.account_posts)}${mAccountPostList.size}"
         Glide.with(requireActivity())
             .load(mUser!!.photo)
             .placeholder(R.drawable.ic_account_placeholder)

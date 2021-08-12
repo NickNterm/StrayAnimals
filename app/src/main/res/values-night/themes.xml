@@ -26,7 +26,7 @@
 
         <item name="cardBackgroundColor">@color/element_dark</item>
         <item name="background">@color/background_dark</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/toolbar_background_dark</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/background_dark</item>
         <item name="android:textColor">@color/white</item>
     </style>
 

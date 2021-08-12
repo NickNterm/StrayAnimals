@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.iqsoft.strayanimals.R
@@ -29,6 +30,7 @@ class SignInActivity : BaseActivity() {
                         hideProgressDialog()
                     }.addOnFailureListener { e ->
                         hideKeyboard(this)
+                        Log.e("test" , e.toString())
                         showErrorInSnackBar(e.message.toString())
                         hideProgressDialog()
                     }

@@ -5,10 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.iqsoft.strayanimals.activities.MainActivity
-import com.iqsoft.strayanimals.activities.SignInActivity
-import com.iqsoft.strayanimals.activities.SignUpActivity
-import com.iqsoft.strayanimals.activities.SplashScreen
+import com.iqsoft.strayanimals.activities.*
 import com.iqsoft.strayanimals.fragments.UploadFragment
 import com.iqsoft.strayanimals.models.Post
 import com.iqsoft.strayanimals.models.User
@@ -78,12 +75,37 @@ class FirestoreClass() {
                     activity.allPostsLoaded(postList)
                 } else if (activity is MainActivity) {
                     activity.allPostsLoaded(postList)
+                } else if (activity is ViewProfileActivity){
+                    activity.allPostsLoaded(postList)
                 }
             }.addOnFailureListener {
                 Log.e("test", it.toString())
 
             }
     }
+
+    fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>) {
+        mFirebase.collection(Constants.USERS)
+            .document(getCurrentUserId())
+            .update(userHashMap)
+            .addOnSuccessListener {
+                when (activity) {
+                    is EditProfileActivity -> {
+                        activity.userUpdated()
+                    }
+                }
+
+            }.addOnFailureListener { e ->
+                Log.e("testt", e.toString())
+                Toast.makeText(activity, "Error when Updating!!", Toast.LENGTH_LONG).show()
+                when (activity) {
+                    is EditProfileActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
+            }
+    }
+
 
     fun readPosts(activity: Activity, limit: Long = 50) {
         mFirebase.collection(Constants.POSTS)
