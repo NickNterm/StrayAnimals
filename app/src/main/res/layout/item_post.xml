@@ -45,6 +45,7 @@
         android:layout_height="1dp"
         android:layout_marginHorizontal="@dimen/post_item_view_margin_horizontal"
         android:layout_marginVertical="@dimen/post_item_view_margin_top"
+        android:visibility="gone"
         android:background="@color/primaryColor" />
 
     <ImageView
@@ -57,6 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginHorizontal="@dimen/post_item_view_margin_horizontal"
+        android:visibility="gone"
         android:layout_marginVertical="@dimen/post_item_view_margin_top"
         android:background="@color/primaryColor" />
 
@@ -89,8 +91,16 @@
         android:id="@+id/tv_item_post_post_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/secondaryTextColor"
         android:layout_marginStart="@dimen/post_item_description_padding"
         android:textSize="@dimen/post_item_post_time_text_size"
         tools:text="10/10/10" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/post_item_view_margin_horizontal"
+        android:layout_marginTop="@dimen/post_item_view_margin_top"
+        android:background="@color/primaryColor" />
 
 </LinearLayout>

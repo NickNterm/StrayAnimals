@@ -39,14 +39,14 @@
                 android:layout_width="@dimen/account_image_size"
                 android:layout_height="@dimen/account_image_size"
                 android:layout_marginTop="@dimen/ll_in_card_inside_margin"
-                android:src="@drawable/ic_account_placeholder"/>
+                android:src="@drawable/ic_account_placeholder" />
 
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/ll_in_card_inside_margin"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ll_in_card_inside_margin">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_account_name"
@@ -65,8 +65,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_edit_account_email"
                     android:layout_width="match_parent"
-                    android:focusable="false"
                     android:layout_height="match_parent"
+                    android:focusable="false"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>

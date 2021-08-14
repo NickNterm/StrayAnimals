@@ -18,6 +18,7 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent">
 
@@ -27,7 +28,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:title="@string/pick_location" />
+
+
     </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ib_maps_my_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:src="@drawable/ic_baseline_my_location_24"
+        app:backgroundTint="@color/primaryColor"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_maps_select"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_maps_select"
+        app:tint="@color/white" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -42,14 +57,16 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_maps_select"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/maps_button_margin"
         android:background="@drawable/solid_button_rounded"
         android:foreground="?attr/selectableItemBackground"
         android:text="@string/select"
         android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/ib_maps_my_location"
         map:layout_constraintBottom_toBottomOf="parent"
-        map:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintStart_toStartOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,4 +44,6 @@
     <string name="save">Save</string>
     <string name="phone_cant_be_empty">Phone cannot be empty</string>
     <string name="phone_is_not_valid">Phone is not valid</string>
+    <string name="apply">Apply</string>
+    <string name="map">Map</string>
 </resources>

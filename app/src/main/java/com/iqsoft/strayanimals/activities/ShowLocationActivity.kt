@@ -65,26 +65,9 @@ class ShowLocationActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val zoomLevel = 13.0f
         val pos = LatLng(mLocation.latitude, mLocation.longitude)
-        val marker = MarkerOptions().position(pos).icon(bitmapDescriptorFromVector(this, R.drawable.ic_marker))
+        val marker = MarkerOptions().position(pos).icon(Constants.bitmapDescriptorFromVector(this, R.drawable.ic_marker))
         mMap.addMarker(marker)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, zoomLevel))
     }
-    private fun bitmapDescriptorFromVector(
-        context: Context,
-        @DrawableRes vectorDrawableResourceId: Int
-    ): BitmapDescriptor? {
-        val background = ContextCompat.getDrawable(context,vectorDrawableResourceId)
-        background!!.setBounds(0, 0, background.intrinsicWidth, background.intrinsicHeight)
 
-
-        val bitmap = Bitmap.createBitmap(
-            background.intrinsicWidth,
-            background.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
-
-        val canvas = Canvas(bitmap)
-        background.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
-    }
 }

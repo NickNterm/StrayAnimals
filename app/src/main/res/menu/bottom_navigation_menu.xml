@@ -7,9 +7,13 @@
     <item
         android:id="@+id/upload_page"
         android:icon="@drawable/ic_file_upload_24"
-        android:title="@string/upload"/>
+        android:title="@string/upload" />
+    <item
+        android:id="@+id/map_page"
+        android:icon="@drawable/ic_baseline_location_on_24"
+        android:title="@string/map" />
     <item
         android:id="@+id/account_page"
         android:icon="@drawable/ic_baseline_account_circle_24"
-        android:title="@string/account"/>
+        android:title="@string/account" />
 </menu>

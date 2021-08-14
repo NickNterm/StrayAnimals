@@ -13,6 +13,8 @@
     <color name="bezColor2">#7E5F5E</color>
     <color name="blueColor">#4f86d0</color>
 
+    <color name="secondaryTextColor">#757575</color>
+
     <color name="icon_stroke_color">@color/primaryColor</color>
 
     <color name="toolbar_background_dark">#1f1f1f</color>

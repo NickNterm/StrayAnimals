@@ -28,7 +28,6 @@ class PostListAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val model = list[position]
-        Log.e("testt", model.toString())
 
         mFirebase.collection(Constants.USERS)
             .document(model.createdBy)
@@ -47,6 +46,7 @@ class PostListAdapter(
                         .centerCrop()
                         .placeholder(R.drawable.ic_baseline_loading)
                         .into(holder.itemView.iv_item_post_main_image)
+                    holder.itemView.tv_item_post_post_time.text = Constants.getDate(model.postedTime, "dd/MM/yyyy")
                     holder.itemView.tv_item_post_description.text = model.description
                     if (context !is ViewProfileActivity) {
                         holder.itemView.ib_item_post_info.visibility = View.VISIBLE

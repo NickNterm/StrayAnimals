@@ -44,4 +44,7 @@
     <dimen name="post_item_location_image_margin_end">10dp</dimen>
     <dimen name="view_account_button_margin_end">10dp</dimen>
     <dimen name="post_item_post_time_text_size">13sp</dimen>
+    <dimen name="feed_main_filter_horizontal_margin">10dp</dimen>
+    <dimen name="feed_main_button_apply_vertical_margin">5dp</dimen>
+    <dimen name="feed_main_button_apply_horizontal_margin">10dp</dimen>
 </resources>

@@ -11,6 +11,7 @@ import com.iqsoft.strayanimals.R
 import com.iqsoft.strayanimals.firebase.FirestoreClass
 import com.iqsoft.strayanimals.fragments.AccountFragment
 import com.iqsoft.strayanimals.fragments.MainFragment
+import com.iqsoft.strayanimals.fragments.MapFragment
 import com.iqsoft.strayanimals.fragments.UploadFragment
 import com.iqsoft.strayanimals.models.Post
 import com.iqsoft.strayanimals.models.User
@@ -23,6 +24,7 @@ class MainActivity : BaseActivity() {
     private lateinit var accountFragment: AccountFragment
     private lateinit var uploadFragment: UploadFragment
     private lateinit var mainFragment: MainFragment
+    private lateinit var mapFragment: MapFragment
     private lateinit var activeFragment: Fragment
     private lateinit var mUser: User
     private lateinit var mPostList: ArrayList<Post>
@@ -35,8 +37,11 @@ class MainActivity : BaseActivity() {
         accountFragment = AccountFragment.newInstance(mUser, mAccountPostList)
         uploadFragment = UploadFragment.newInstance()
         mainFragment = MainFragment.newInstance(mPostList)
+        mapFragment = MapFragment.newInstance(mPostList)
         supportFragmentManager.beginTransaction()
-            .add(R.id.main_activity_fragment, accountFragment, "3").hide(accountFragment).commit()
+            .add(R.id.main_activity_fragment, accountFragment, "4").hide(accountFragment).commit()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_activity_fragment, mapFragment, "3").hide(mapFragment).commit()
         supportFragmentManager.beginTransaction()
             .add(R.id.main_activity_fragment, uploadFragment, "2").hide(uploadFragment).commit()
         supportFragmentManager.beginTransaction()
@@ -54,6 +59,10 @@ class MainActivity : BaseActivity() {
                 }
                 R.id.account_page -> {
                     showFragment(accountFragment)
+                    true
+                }
+                R.id.map_page -> {
+                    showFragment(mapFragment)
                     true
                 }
                 else -> false
@@ -110,6 +119,9 @@ class MainActivity : BaseActivity() {
 
     fun postUploaded() {
         hideProgressDialog()
+        uploadFragment = UploadFragment.newInstance()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.main_activity_fragment, uploadFragment, "2").hide(uploadFragment).commit()
         showFragment(mainFragment)
         bottom_navigation_main_activity.selectedItemId = R.id.home_page
     }
