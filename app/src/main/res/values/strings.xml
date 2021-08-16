@@ -15,7 +15,6 @@
     <string name="upload">Upload</string>
     <string name="home">Home</string>
     <string name="account">Account</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="you_have_been_blocked">You have been blocked. Contact: strayanimalsdeveloper@gmail.com</string>
     <string name="edit_account">Edit Account</string>
     <string name="no_posts_found">No Posts Found</string>
@@ -23,7 +22,7 @@
     <string name="account_posts">"Posts: "</string>
     <string name="account_phone">"Phone: "</string>
     <string name="account_name">"Name: "</string>
-    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_maps" translatable="false">MapsActivity</string>
     <string name="select">Select</string>
     <string name="pick_location">Pick Location</string>
     <string name="pick_animal">Animal</string>
@@ -38,12 +37,13 @@
     <string name="select_animal">Please select animal</string>
     <string name="select_location">Please select location</string>
     <string name="phone">Phone</string>
-    <string name="fill_description">Fill Description</string>
-    <string name="title_activity_show_location">ShowLocationActivity</string>
+    <string name="fill_description" translatable="false">Fill Description</string>
+    <string name="title_activity_show_location" translatable="false">ShowLocationActivity</string>
     <string name="call">Call</string>
     <string name="save">Save</string>
     <string name="phone_cant_be_empty">Phone cannot be empty</string>
     <string name="phone_is_not_valid">Phone is not valid</string>
-    <string name="apply">Apply</string>
+    <string name="apply" translatable="false">Apply</string>
     <string name="map">Map</string>
+    <string name="sheet_title_post">Post</string>
 </resources>

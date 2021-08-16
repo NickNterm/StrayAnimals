@@ -28,6 +28,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.iqsoft.strayanimals.R
+import com.iqsoft.strayanimals.activities.MainActivity
 import com.iqsoft.strayanimals.models.Location
 import com.iqsoft.strayanimals.models.Post
 import com.iqsoft.strayanimals.utils.Constants
@@ -50,14 +51,14 @@ class MapFragment : Fragment() {
         for (i in mPostList) {
             val latLong = LatLng(i.location.latitude, i.location.longitude)
             val marker = MarkerOptions().position(latLong)
-            if (i.animal == resources.getString(R.string.dog)) {
+            if (i.animal == "Dog") {
                 marker.icon(
                     Constants.bitmapDescriptorFromVector(
                         requireContext(),
                         R.drawable.ic_dog_marker
                     )
                 )
-            } else if (i.animal == resources.getString(R.string.cat)) {
+            } else if (i.animal == "Cat") {
                 marker.icon(
                     Constants.bitmapDescriptorFromVector(
                         requireContext(),
@@ -74,6 +75,14 @@ class MapFragment : Fragment() {
             mMap.setOnMarkerClickListener { mMarker ->
                 val index = mMarker.id.toString().drop(1).toInt()
                 mMarker.showInfoWindow()
+                (activity as MainActivity).hideBottomNav()
+                (activity as MainActivity).showBottomSheet(mPostList[index])
+                mMap.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        mMarker.position,
+                        mMap.cameraPosition.zoom
+                    )
+                )
                 Log.e(
                     "test",
                     Constants.getAddress(
@@ -84,6 +93,9 @@ class MapFragment : Fragment() {
                 )
                 //Log.e("test", mPostList[index].description)
                 true
+            }
+            mMap.setOnMapClickListener {
+                (activity as MainActivity).showBottomNav()
             }
             mMap.addMarker(marker)
         }

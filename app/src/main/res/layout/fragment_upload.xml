@@ -94,6 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/sign_button_in_card_vertical_margin"
+            android:layout_marginBottom="@dimen/main_activity_bottom_nav_height"
             android:background="@drawable/solid_button_rounded"
             android:foreground="?attr/selectableItemBackground"
             android:text="@string/upload"

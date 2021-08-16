@@ -1,0 +1,130 @@
+<html>
+
+<head>
+    <title>Stray Animals</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sen:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="intro_page.css" />
+</head>
+
+<body>
+    <div class="d-flex justify-content-center">
+        <div class="card mt-5" style="width: 20rem;">
+            <div class="card-body">
+                <div class="d-flex justify-content-center mt-1 mb-3">
+                    <h3 id="form_title">StrayAnimals</h3>
+                </div>
+                <div class="mb-2">
+                    <input type="text" class="form-control" placeholder="Name" id="name_text_sign_up">
+                </div>
+                <div class="mb-2">
+                    <input type="email" class="form-control" placeholder="Email" id="email_text_sign_up">
+                </div>
+                <div class="mb-2">
+                    <input type="tel" class="form-control" placeholder="Phone" id="phone_text_sign_up">
+                </div>
+                <div class="mb-2">
+                    <input type="password" class="form-control" placeholder="Password" id="password_text_sign_up">
+                </div>
+                <div class="mb-2">
+                    <input type="password" class="form-control" placeholder="Repeat" id="repeat_text_sign_up">
+                </div>
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-primary" onclick="signUp()">Sign Up</button>
+                </div>
+                <div class="alert alert-danger mt-3 mb-0" role="alert" style="display: none;" id="error_div"></div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="card mt-3" style="width: 20rem;">
+            <div class="card-body">
+                <div class="d-flex justify-content-center">
+                    <p class="mb-0">Have account? <a onclick="showSignIn()" class="link-primary">Sign In</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+<script src="init_firebase.js"></script>
+<script>
+    var db = firebase.firestore();
+    
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            window.location.href = "/main_page.html"
+            var uid = user.uid;
+        }
+    });
+
+    function showSignIn() {
+        window.location.href = "/intro_page.html";
+    }
+
+    function signUp() {
+        var userName = document.getElementById("name_text_sign_up").value;
+        var userPass = document.getElementById("password_text_sign_up").value;
+        var userPhone = document.getElementById("phone_text_sign_up").value;
+        var userPassRepeat = document.getElementById("repeat_text_sign_up").value;
+        var userEmail = document.getElementById("email_text_sign_up").value;
+        if (validateForm(userName, userPhone, userEmail, userPhone, userPass, userPassRepeat)) {
+            firebase.auth().createUserWithEmailAndPassword(userEmail, userPassRepeat)
+                .then((userCredential) => {
+                    var user = {
+                        name: userName,
+                        email: userEmail,
+                        id: userCredential.user.uid.toString(),
+                        block: 0,
+                        phone: userPhone,
+                        photo: ""
+                    }
+                    db.collection("Users").doc(userCredential.user.uid).set(user).then(() => {
+                        window.location.href = "/";
+                    });
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    document.getElementById("error_div").style.display = "block";
+                    document.getElementById("error_div").innerHTML = errorMessage;
+                });
+        }
+    }
+
+    function validateForm(name, phone, email, phone, pass1, pass2) {
+        var isValid = true
+        var errorMessage = ""
+        if (name === "") {
+            errorMessage = "name cannot be empty"
+            isValid = false
+        }
+        if (phone.toString().length != 10) {
+            errorMessage = "phone is not valid"
+            isValid = false
+        }
+        if (pass1 !== pass2) {
+            errorMessage = "passwords do not match"
+            document.getElementById("password_text_sign_up").value = "";
+            document.getElementById("repeat_text_sign_up").value = "";
+            isValid = false
+        }
+        if (!isValid) {
+            document.getElementById("error_div").style.display = "block";
+            document.getElementById("error_div").innerHTML = errorMessage;
+        } else {
+            document.getElementById("error_div").style.display = "none";
+        }
+        return isValid
+    }
+
+</script>
+
+</html>

@@ -11,10 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.iqsoft.strayanimals.R
 import com.iqsoft.strayanimals.activities.EditProfileActivity
 import com.iqsoft.strayanimals.activities.MainActivity
 import com.iqsoft.strayanimals.activities.MapsActivity
+import com.iqsoft.strayanimals.activities.SplashScreen
 import com.iqsoft.strayanimals.adapters.PostListAdapter
 import com.iqsoft.strayanimals.firebase.FirestoreClass
 import com.iqsoft.strayanimals.models.Post
@@ -70,6 +72,11 @@ class AccountFragment : Fragment() {
         if (mAccountPostList.size > 0) {
             view.rv_account_posts.visibility = View.VISIBLE
             view.tv_account_no_posts_found.visibility = View.GONE
+        }
+        view.btn_account_logout.setOnClickListener{
+            FirebaseAuth.getInstance().signOut()
+            requireActivity().startActivity(Intent(requireActivity(), SplashScreen::class.java))
+            requireActivity().finish()
         }
         view.account_refresh.setOnRefreshListener {
             Log.e("testt", "refresh")

@@ -7,13 +7,16 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="98.841431mm"
-   height="98.841431mm"
-   viewBox="0 0 98.841431 98.841431"
+   width="98.841438mm"
+   height="98.841438mm"
+   viewBox="0 0 98.841439 98.841439"
    version="1.1"
    id="svg887"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
-   sodipodi:docname="accountPlaceholder.svg">
+   sodipodi:docname="accountPlaceholder.svg"
+   inkscape:export-filename="/home/iqsoft/git/StrayAnimals/WebSite/public/accont_placeholder.png"
+   inkscape:export-xdpi="97.580002"
+   inkscape:export-ydpi="97.580002">
   <defs
      id="defs881" />
   <sodipodi:namedview
@@ -24,8 +27,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="320.40732"
-     inkscape:cy="372.20117"
+     inkscape:cx="320.40733"
+     inkscape:cy="372.20118"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -43,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -51,7 +54,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-0.57928348,-0.57928348)">
+     transform="translate(-0.57928181,-0.57928181)">
     <circle
        style="fill:none;stroke:#000000;stroke-width:5.29167;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
        id="path839"

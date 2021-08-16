@@ -114,7 +114,6 @@ class FirestoreClass() {
             .get()
             .addOnSuccessListener { document ->
                 val postList: ArrayList<Post> = ArrayList()
-
                 for (i in document.documents) {
                     val post = i.toObject(Post::class.java)!!
                     post.id = i.id

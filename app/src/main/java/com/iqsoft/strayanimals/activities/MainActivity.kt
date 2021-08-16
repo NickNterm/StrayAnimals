@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.iqsoft.strayanimals.R
@@ -19,6 +21,18 @@ import com.iqsoft.strayanimals.utils.Constants
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_upload.*
 import java.io.IOException
+import android.view.animation.TranslateAnimation
+
+import android.view.animation.Animation
+import android.widget.LinearLayout
+import android.widget.Toast
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.bottom_sheet_show_post.*
+import kotlinx.android.synthetic.main.bottom_sheet_show_post.view.*
+import kotlinx.android.synthetic.main.item_post.view.*
+
 
 class MainActivity : BaseActivity() {
     private lateinit var accountFragment: AccountFragment
@@ -29,6 +43,7 @@ class MainActivity : BaseActivity() {
     private lateinit var mUser: User
     private lateinit var mPostList: ArrayList<Post>
     private lateinit var mAccountPostList: ArrayList<Post>
+    private var navbarHidden: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +85,71 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    fun showBottomSheet(post: Post) {
+        FirebaseFirestore.getInstance().collection(Constants.USERS)
+            .document(post.createdBy)
+            .get()
+            .addOnSuccessListener { document ->
+                val user = document.toObject(User::class.java)!!
+                val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialogTheme)
+                bottomSheetDialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                val bottomSheetView = LayoutInflater.from(this)
+                    .inflate(R.layout.bottom_sheet_show_post, bottom_sheet_container)
+                bottomSheetView.tv_sheet_post_creator_name.text = user.name
+                Glide.with(this)
+                    .load(user.photo)
+                    .placeholder(R.drawable.ic_account_placeholder)
+                    .centerCrop()
+                    .into(bottomSheetView.iv_sheet_post_profile_image)
+                Glide.with(this)
+                    .load(post.image[0])
+                    .placeholder(R.drawable.ic_baseline_loading)
+                    .centerCrop()
+                    .into(bottomSheetView.iv_sheet_post_main_image)
+                bottomSheetView.ib_sheet_post_info.setOnClickListener {
+                    val intent = Intent(this, ViewProfileActivity::class.java)
+                    intent.putExtra(Constants.INTENT_USER_TO_SHOW, user)
+                    startActivity(intent)
+                }
+                bottomSheetView.ib_sheet_post_location.setOnClickListener {
+                    val intent = Intent(this, ShowLocationActivity::class.java)
+                    intent.putExtra(Constants.INTENT_LOCATION, post.location)
+                    startActivity(intent)
+                }
+                bottomSheetView.tv_sheet_post_description.text = post.description
+                bottomSheetView.tv_sheet_post_post_time.text =
+                    Constants.getDate(post.postedTime, "dd/MM/yyyy")
+                bottomSheetDialog.setOnDismissListener {
+                    showBottomNav()
+                }
+                bottomSheetDialog.setContentView(bottomSheetView)
+                bottomSheetDialog.show()
+            }.addOnFailureListener {
+                Toast.makeText(this, "there is no internet", Toast.LENGTH_LONG)
+                    .show()
+            }
+    }
+
+    fun hideBottomNav() {
+        if (!navbarHidden) {
+            navbarHidden = true
+            bottom_navigation_main_activity.animate()
+                .translationY(bottom_navigation_main_activity.height.toFloat())
+                .setDuration(300)
+                .start()
+        }
+    }
+
+    fun showBottomNav() {
+        if (navbarHidden) {
+            navbarHidden = false
+            bottom_navigation_main_activity.animate()
+                .translationY(0f)
+                .setDuration(300)
+                .start()
+        }
+    }
+
     private fun showFragment(MyFragment: Fragment) {
         supportFragmentManager.beginTransaction().hide(activeFragment).show(MyFragment).commit()
         activeFragment = MyFragment
@@ -85,14 +165,15 @@ class MainActivity : BaseActivity() {
     private fun getIntents() {
         mUser = intent.getParcelableExtra(Constants.INTENT_USER)!!
         mPostList = intent.getParcelableArrayListExtra<Post>(Constants.INTENT_POSTS)!!
-        mAccountPostList = intent.getParcelableArrayListExtra<Post>(Constants.INTENT_ACCOUNT_POSTS)!!
+        mAccountPostList =
+            intent.getParcelableArrayListExtra<Post>(Constants.INTENT_ACCOUNT_POSTS)!!
     }
 
-    fun refreshPosts(){
+    fun refreshPosts() {
         FirestoreClass().readPosts(this)
     }
 
-    fun postsLoaded(posts: ArrayList<Post>){
+    fun postsLoaded(posts: ArrayList<Post>) {
         mainFragment.refreshPosts(posts)
     }
 
@@ -100,11 +181,11 @@ class MainActivity : BaseActivity() {
         FirestoreClass().getMyUser(this)
     }
 
-    fun refreshAccountPosts(){
+    fun refreshAccountPosts() {
         FirestoreClass().readAccountPosts(this, FirestoreClass().getCurrentUserId())
     }
 
-    fun allPostsLoaded(accountPosts: ArrayList<Post>){
+    fun allPostsLoaded(accountPosts: ArrayList<Post>) {
         accountFragment.updatePosts(accountPosts)
     }
 

@@ -5,7 +5,6 @@
     android:id="@+id/account_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".fragments.AccountFragment">
 
     <LinearLayout
@@ -16,8 +15,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/account_ll_margin"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/account_ll_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,11 +32,21 @@
 
                 <TextView
                     android:id="@+id/tv_account_posts"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:textStyle="bold"
                     tools:text="Posts: 12" />
+
+                <ImageButton
+                    android:id="@+id/btn_account_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:backgroundTint="#00000000"
+                    android:src="@drawable/ic_baseline_logout_24"
+                    app:tint="?android:textColor" />
             </LinearLayout>
 
             <TextView

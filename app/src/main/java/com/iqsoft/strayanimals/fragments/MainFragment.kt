@@ -40,37 +40,6 @@ class MainFragment : Fragment() {
         }
         mAdapter = PostListAdapter(requireContext(), mPostList)
         view.rv_feed.adapter = mAdapter
-        view.filter_found.setOnCheckedChangeListener { _, _ ->
-            if (view.filter_found.isCheckable) {
-                mFilterArray[0] = 1
-            } else {
-                mFilterArray[0] = 0
-            }
-        }
-        view.filter_lost.setOnCheckedChangeListener { _, _ ->
-            if (view.filter_lost.isCheckable) {
-                mFilterArray[1] = 1
-            } else {
-                mFilterArray[1] = 0
-            }
-        }
-        view.filter_dog.setOnCheckedChangeListener { _, _ ->
-            if (view.filter_dog.isCheckable) {
-                mFilterArray[2] = 1
-            } else {
-                mFilterArray[2] = 0
-            }
-        }
-        view.filter_cat.setOnCheckedChangeListener { _, _ ->
-            if (view.filter_cat.isCheckable) {
-                mFilterArray[3] = 1
-            } else {
-                mFilterArray[3] = 0
-            }
-        }
-        view.btn_feed_apply_filters.setOnClickListener {
-            Log.e("testt", mFilterArray[0].toString())
-        }
 
         return view
     }

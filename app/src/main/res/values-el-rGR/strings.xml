@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Stray Animals</string>
+    <string name="sign_in">Συνδεθείτε</string>
+    <string name="password">Κωδικος</string>
+    <string name="sign_up">Εγγραφείτε</string>
+    <string name="email">Ηλεκτρονική διεύθ.</string>
+    <string name="repeat">Επανάλαβε</string>
+    <string name="name">Ονομα</string>
+    <string name="email_cant_be_empty">Δεν γίνεται να είναι κενό αυτό το πεδίο</string>
+    <string name="password_cant_be_empty">Δεν γίνεται να είναι κενό αυτό το πεδίο</string>
+    <string name="name_cant_be_empty">Δεν γίνεται να είναι κενό αυτό το πεδίο</string>
+    <string name="passwords_dont_match">Δεν γίνεται να είναι κενό αυτό το πεδίο</string>
+    <string name="error_while_creating_user">Δεν γίνεται να είναι κενό αυτό το πεδίο</string>
+    <string name="upload">Μεταφόρτωση</string>
+    <string name="home">Αρχική</string>
+    <string name="account">Λογαριασμός</string>
+    <string name="you_have_been_blocked">Έχετε μπλοκαριστεί. Επικοινωνίστε: strayanimalsdeveloper@gmail.com</string>
+    <string name="edit_account">Επεξεργασία Λογαριασμού</string>
+    <string name="no_posts_found">Δεν βρέθηκαν δημοσιεύσεις</string>
+    <string name="account_email">Ηλεκτρονική διεύθυνση:</string>
+    <string name="account_posts">Δημοσιεύσεις:</string>
+    <string name="account_phone">Τηλέφωνο:</string>
+    <string name="account_name">Ονομα:</string>
+    <string name="select">Επίλεξε</string>
+    <string name="pick_location">Επίλεξε Τοποθεσία</string>
+    <string name="pick_animal">Ζώο</string>
+    <string name="dog">Σκύλος</string>
+    <string name="cat">Γάτα</string>
+    <string name="description">Περιγραφή</string>
+    <string name="lost">Χάθηκε</string>
+    <string name="found">Βρέθηκε</string>
+    <string name="select_lost_or_found">Παρακαλώ επιλέξτε</string>
+    <string name="select_image">Παρακαλώ επιλέξτε</string>
+    <string name="select_animal">Παρακαλώ επιλέξτε</string>
+    <string name="select_location">Παρακαλώ επιλέξτε</string>
+    <string name="phone">Τηλέφωνο</string>
+    <string name="call">Κλήση</string>
+    <string name="save">Αποθήκευση</string>
+    <string name="phone_cant_be_empty">Δεν γίνεται να είναι κενό αυτό το πεδίο</string>
+    <string name="phone_is_not_valid">Ο αριθμός δεν είναι εγκυρος</string>
+    <string name="map">Χάρτης</string>
+    <string name="sheet_title_post">Δημοσίευση</string>
+    <string name="intro_text_message">Καλώς ορίσατε στην εφαρμογή Stray Animals !!!\\nΑυτή η εφαρμογή εχει ως σκοπό να βοηθήσει τα αδέσποτα να βρουν σπίτι</string>
+    <string name="lost_or_found">Χάθηκε ή Βρέθηκε</string>
+</resources>

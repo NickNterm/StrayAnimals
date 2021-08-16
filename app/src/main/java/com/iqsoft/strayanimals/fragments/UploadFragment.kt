@@ -126,7 +126,7 @@ class UploadFragment : Fragment() {
                         imageArrayList.add(mImageUrl)
                         var found = 0
                         var lost = 0
-                        if (mState == resources.getString(R.string.lost)) {
+                        if (mState == "Lost") {
                             lost = 1
                         } else {
                             found = 1
@@ -209,22 +209,22 @@ class UploadFragment : Fragment() {
             return@setOnMenuItemClickListener when (menuItem.itemId) {
                 R.id.action_select_cat -> {
                     auto_complete_animal.setText(resources.getString(R.string.cat))
-                    mAnimal = resources.getString(R.string.cat)
+                    mAnimal = "Cat"
                     true
                 }
                 R.id.action_select_dog -> {
                     auto_complete_animal.setText(resources.getString(R.string.dog))
-                    mAnimal = resources.getString(R.string.dog)
+                    mAnimal = "Dog"
                     true
                 }
                 R.id.action_animal_found -> {
                     auto_complete_animal_state.setText(resources.getString(R.string.found))
-                    mState = resources.getString(R.string.found)
+                    mState = "Found"
                     true
                 }
                 R.id.action_animal_lost -> {
                     auto_complete_animal_state.setText(resources.getString(R.string.lost))
-                    mState = resources.getString(R.string.lost)
+                    mState = "Lost"
                     true
                 }
                 else -> {

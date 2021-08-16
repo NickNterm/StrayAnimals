@@ -47,4 +47,6 @@
     <dimen name="feed_main_filter_horizontal_margin">10dp</dimen>
     <dimen name="feed_main_button_apply_vertical_margin">5dp</dimen>
     <dimen name="feed_main_button_apply_horizontal_margin">10dp</dimen>
+    <dimen name="main_activity_bottom_nav_height">60dp</dimen>
+    <dimen name="bottom_sheet_corner_radius">30dp</dimen>
 </resources>

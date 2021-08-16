@@ -1,0 +1,15 @@
+<html>
+<header>
+
+</header>
+
+<body>
+<div id="div">here is the name</div>
+</body>
+<script>
+    console.log(window.location.pathname.split('/'))
+    var URLArray = window.location.pathname.split('/') 
+    document.getElementById("div").innerHTML = URLArray[URLArray.length-1];
+</script>
+
+</html>
