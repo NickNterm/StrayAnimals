@@ -83,15 +83,7 @@ class MapFragment : Fragment() {
                         mMap.cameraPosition.zoom
                     )
                 )
-                Log.e(
-                    "test",
-                    Constants.getAddress(
-                        requireActivity(),
-                        mPostList[index].location.latitude,
-                        mPostList[index].location.longitude
-                    )
-                )
-                //Log.e("test", mPostList[index].description)
+
                 true
             }
             mMap.setOnMapClickListener {

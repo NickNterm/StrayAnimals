@@ -8,9 +8,9 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.location.Address
 import android.location.Geocoder
-import android.location.LocationManager
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.annotation.DrawableRes
@@ -60,26 +60,30 @@ object Constants {
             .getExtensionFromMimeType(activity.contentResolver.getType(uri!!))
     }
 
-    fun getAddress(activity: Activity, lat: Double, lng: Double): String {
-        val geocoder = Geocoder(activity, Locale.getDefault())
+    fun getAddress(context: Context, lat: Double, lng: Double): String {
+        val geocoder = Geocoder(context, Locale.getDefault())
+
         try {
             val addresses: List<Address> = geocoder.getFromLocation(lat, lng, 1)
-                val obj: Address = addresses[0]
-                var countryName = "Location is Invalid"
-                if (!obj.countryName?.trimIndent().isNullOrEmpty() && !obj.locality?.trimIndent()
-                        .isNullOrEmpty()
-                ) {
-                    countryName = obj.countryName.trimIndent() + ", " + obj.locality.trimIndent()
-                }
+            Log.e("testt", Geocoder.isPresent().toString())
+            val obj: Address = addresses[0]
+            var countryName = "Location is Invalid"
+
+            if (!obj.countryName?.trimIndent().isNullOrEmpty() && !obj.locality?.trimIndent()
+                    .isNullOrEmpty()
+            ) {
+                countryName = obj.countryName.trimIndent() + ", " + obj.locality.trimIndent()
+            }
 
             return countryName
         } catch (e: IOException) {
             e.printStackTrace()
-            Toast.makeText(activity, e.message, Toast.LENGTH_SHORT).show()
-        }catch (e: Exception){
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.e("testt", e.toString())
             e.printStackTrace()
         }
-        return "Location is Invalid"
+        return "Location is Invalidddd"
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -97,7 +101,7 @@ object Constants {
         context: Context,
         @DrawableRes vectorDrawableResourceId: Int
     ): BitmapDescriptor? {
-        val background = ContextCompat.getDrawable(context,vectorDrawableResourceId)
+        val background = ContextCompat.getDrawable(context, vectorDrawableResourceId)
         background!!.setBounds(0, 0, background.intrinsicWidth, background.intrinsicHeight)
 
 
@@ -112,5 +116,5 @@ object Constants {
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
-  
+
 }

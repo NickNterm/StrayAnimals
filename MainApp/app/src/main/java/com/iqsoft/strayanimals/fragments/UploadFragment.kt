@@ -55,7 +55,7 @@ class UploadFragment : Fragment() {
             if (data!!.hasExtra(Constants.INTENT_LOCATION)) {
                 mLocation = data.getParcelableExtra(Constants.INTENT_LOCATION)!!
                 tv_upload_location.setText(
-                    Constants.getAddress(requireActivity(), mLocation.latitude, mLocation.longitude)
+                    Constants.getAddress(requireContext(), mLocation.latitude, mLocation.longitude)
                 )
             }
         }

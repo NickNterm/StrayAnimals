@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="post_item_profile_image_size">30dp</dimen>
+    <dimen name="post_item_header_padding">7dp</dimen>
+    <dimen name="post_name_margin_start">10dp</dimen>
+    <dimen name="post_item_view_margin_top">5dp</dimen>
+    <dimen name="post_item_view_margin_horizontal">10dp</dimen>
+    <dimen name="post_image_height">400dp</dimen>
+    <dimen name="post_item_description_padding">10dp</dimen>
+    <dimen name="post_item_button_margin">5dp</dimen>
+    <dimen name="post_item_location_image_size">40dp</dimen>
+    <dimen name="post_item_location_image_margin_end">10dp</dimen>
+    <dimen name="post_item_post_time_text_size">13sp</dimen>
+</resources>

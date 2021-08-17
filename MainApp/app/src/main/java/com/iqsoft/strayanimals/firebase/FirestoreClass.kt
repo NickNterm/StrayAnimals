@@ -107,7 +107,7 @@ class FirestoreClass() {
     }
 
 
-    fun readPosts(activity: Activity, limit: Long = 50) {
+    fun readPosts(activity: Activity, limit: Long = 100) {
         mFirebase.collection(Constants.POSTS)
             .orderBy(Constants.POST_TIME)
             .limitToLast(limit)

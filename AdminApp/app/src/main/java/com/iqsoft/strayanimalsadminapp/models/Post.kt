@@ -1,4 +1,4 @@
-package com.iqsoft.strayanimals.models
+package com.iqsoft.strayanimalsadminapp.models
 
 import android.os.Parcel
 import android.os.Parcelable
