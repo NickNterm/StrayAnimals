@@ -10,4 +10,10 @@
        android:id="@+id/rv_main"
        android:layout_width="match_parent"
        android:layout_height="match_parent"/>
+   <TextView
+       android:id="@+id/checkText"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:visibility="gone"
+      android:text="There are no post to check"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

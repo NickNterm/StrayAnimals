@@ -3,6 +3,7 @@ package com.iqsoft.strayanimalsadminapp.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.iqsoft.strayanimalsadminapp.Constants
@@ -27,11 +28,19 @@ class MainActivity : AppCompatActivity() {
                     post.id = i.id
                     postList.add(post)
                 }
-                postList.reverse()
-                rv_main.layoutManager = LinearLayoutManager(this)
-                adapter = PostListAdapter(this,postList)
-                rv_main.adapter = adapter
+                if(postList.size == 0){
+                    checkText.visibility = View.VISIBLE
+                    rv_main.visibility = View.GONE
+                }else{
+                    postList.reverse()
+                    rv_main.layoutManager = LinearLayoutManager(this)
+                    adapter = PostListAdapter(this,postList)
+                    rv_main.adapter = adapter
+                }
+
             }.addOnFailureListener {
+                checkText.visibility = View.VISIBLE
+                rv_main.visibility = View.GONE
                 Log.e("test", it.toString())
             }
     }

@@ -83,7 +83,7 @@ object Constants {
             Log.e("testt", e.toString())
             e.printStackTrace()
         }
-        return "Location is Invalidddd"
+        return "Location is Invalid"
     }
 
     @SuppressLint("SimpleDateFormat")

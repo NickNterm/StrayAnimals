@@ -20,20 +20,21 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         if(getCurrentUserId().isNotEmpty()){
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
         btn_login_sign_in.setOnClickListener{
-            /*showProgressDialog()
+            showProgressDialog()
             val email = et_login_email.text.toString()
             val password = et_login_password.text.toString()
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email,password).addOnSuccessListener {
-                hideProgressDialog()*/
+                hideProgressDialog()
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
-            /*}.addOnFailureListener {
+            }.addOnFailureListener {
                 hideProgressDialog()
                 Log.e("test", it.toString())
                 showErrorInSnackBar(it.message.toString())
-            }*/
+            }
         }
     }
     private fun getCurrentUserId(): String {
