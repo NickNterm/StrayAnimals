@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "StrayAnimals",
+    "slug": "StrayAnimals",
+    "version": "2.0.4",
+    "orientation": "portrait",
+    "icon": "./app/assets/icon.png",
+    "splash": {
+      "image": "./app/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyCAi5GzWHSoY6AzXJZYy-xoJCo3D8KTMSY"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./app/assets/icon.png",
+        "backgroundColor": "#121212"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCAi5GzWHSoY6AzXJZYy-xoJCo3D8KTMSY"
+        }
+      },
+      "package": "com.iqsoft.strayanimals",
+      "versionCode": 7
+    },
+    "web": {
+      "favicon": "./app/assets/favicon.png"
+    },
+    "description": ""
+  }
+}
