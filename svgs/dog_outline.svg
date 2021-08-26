@@ -10,7 +10,7 @@
    viewBox="0 0 1372.4803 1145.7944"
    version="1.1"
    id="svg23"
-   sodipodi:docname="dog_icon_125586.svg"
+   sodipodi:docname="dog_outline.svg"
    width="1372.4803"
    height="1145.7944"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)">
@@ -46,7 +46,8 @@
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg23" />
+     inkscape:current-layer="svg23"
+     inkscape:document-rotation="0" />
   <style
      id="style2">
         .st0{fill:#fff}.st1{fill:none;stroke:#231f20;stroke-width:50;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10}
@@ -58,41 +59,51 @@
      style="fill:none;fill-opacity:1;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none" />
   <g
      id="STROKES"
-     transform="translate(-273.7,-386.86961)">
+     transform="translate(-273.7,-386.86961)"
+     style="stroke:#c2927b;stroke-opacity:1">
     <g
-       id="XMLID_1_">
+       id="XMLID_1_"
+       style="stroke:#c2927b;stroke-opacity:1">
       <path
          class="st1"
          d="m 1280,444.3 c 16.1,-4.4 33.9,-7.3 53.4,-8.4 102,-6 126,74 126,74 h 154 c 28,36 -28,94 -28,94 0,0 16,71.8 -38,73.8 -54,2 -140,23.3 -140,23.3 -31.3,33.9 -36.5,63.4 -30.6,92.8 15.2,75.8 103.7,151.2 8.6,300 -20.5,32.1 -45.1,61.3 -72,87.8 -19.1,18.8 -39.4,36.2 -60.2,52.3 -8.1,63.9 -16.8,129.9 -16.8,129.9 0,0 30.6,34.9 50.4,68.3 8.7,14.5 15.3,28.8 16.5,39.7 0,0 -60,82 -152,0 L 1122,1317.2 c -93.4,49.1 -170.7,71.7 -170.7,71.7 84,15 50,83 50,83 l -332,0.9 c -22,-54 0,-83.9 0,-83.9 0,0 -69.9,-19.9 -80.4,-95.2 -3.8,-27.4 0.2,-62.1 18.4,-105.8 68,-164 304,-204 378,-266.1 74,-62.1 146,-128 146,-128 0,0 7,-35 15,-81.3 6.8,-39.5 14.4,-87.2 19,-128.6 2.9,-25.9 9.6,-48.6 20,-68"
-         id="path5" />
+         id="path5"
+         style="stroke:#c2927b;stroke-opacity:1" />
       <path
          class="st1"
          d="m 1185.4,515.8 c -7.1,-1.7 -13.2,-2.5 -18,-2 -36,4 62,-102 62,-102 0,0 26.6,-4 50.6,32.4 13.8,21 26.8,55.3 33.4,111.6 2.5,21.8 -82,-28.7 -128,-40 z"
-         id="path7" />
+         id="path7"
+         style="stroke:#c2927b;stroke-opacity:1" />
       <path
          class="st1"
          d="m 1122.1,1317.2 -17.6,-211.4"
-         id="path9" />
+         id="path9"
+         style="stroke:#c2927b;stroke-opacity:1" />
       <path
          class="st1"
          d="m 1253.3,1233.9 c 4.4,-35 8.6,-69.4 11.1,-92.1 7,-64 19,-93.1 19,-93.1"
-         id="path11" />
+         id="path11"
+         style="stroke:#c2927b;stroke-opacity:1" />
       <path
          class="st1"
          d="m 1313.5,1181.6 18,172.2 c 0,0 70,-6.2 82,68.9 l -126.5,9.4"
-         id="path13" />
+         id="path13"
+         style="stroke:#c2927b;stroke-opacity:1" />
       <path
          class="st1"
          d="m 942.4,1388.9 -137,-17 c 0,0 138,-8.8 124,-173.4"
-         id="path15" />
+         id="path15"
+         style="stroke:#c2927b;stroke-opacity:1" />
       <path
          class="st1"
          d="m 589,1293.7 c 0,0 -290.3,-78.6 -290.3,-290.3 0,0 142.7,214.6 308.7,184.5"
-         id="path17" />
+         id="path17"
+         style="stroke:#c2927b;stroke-opacity:1" />
       <path
          class="st1"
          d="m 1146.4,712.5 c 0,0 53.7,86.5 230.4,81.3"
-         id="path19" />
+         id="path19"
+         style="stroke:#c2927b;stroke-opacity:1" />
     </g>
   </g>
 </svg>

@@ -74,6 +74,14 @@
                 document.getElementById("error_div").style.display = "block";
             });
     }
+
+        function logOut() {
+        firebase.auth().signOut().then(() => {
+            window.location.href = "/"
+        }).catch((error) => {
+            console.log(error.message)
+        });
+    }
 </script>
 
 </html>

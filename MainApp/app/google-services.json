@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "783963393864",
+    "project_id": "strayanimalsapp",
+    "storage_bucket": "strayanimalsapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783963393864:android:36c5e8c79301ca4330ed7d",
+        "android_client_info": {
+          "package_name": "com.iqsoft.strayanimals"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783963393864-ov90eb5uv6779e5sk33tghk0cdag2lj5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ_GemZAfYWec9QLhTa733ACvvfgG4iZo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783963393864-ov90eb5uv6779e5sk33tghk0cdag2lj5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

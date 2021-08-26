@@ -13,19 +13,33 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" id="nav_bar_title">
+                <img src="/dog_outline.svg" alt="" width="30" height="24">
+                StrayAnimals
+            </a>
+            <button class="btn btn-primary" onclick="signIn()" style="display: none;" id="btn_sign_in">Sign
+                In</button>
+            <button class="btn btn-primary" onclick="logOut()" style="display: none;" id="btn_sign_out">Sign
+                Out</button>
+        </div>
+    </nav>
 
-    <button type="button" class="btn btn-primary" onclick="logOut()">Logout</button>
     <div id="post_template" class="d-none justify-content-center">
         <div class="card mt-2" style="width: 25rem;">
             <div class="card-header form-inline">
                 <div class="row">
                     <div class="col-auto ps-1 pe-0">
                         <div id="post_profile_image_div">
-                            <img id="post_profile_image" loading=lazy src="https://i.imgur.com/llF5iyg.gif">
+                            <img id="post_profile_image" src="https://i.imgur.com/llF5iyg.gif">
                         </div>
                     </div>
                     <div class="col d-flex align-items-center">
                         <p class="mb-0" id="post_profile_name"><strong>Name!!</strong></p>
+                    </div>
+                    <div class="col d-flex justify-content-end align-items-center">
+                        <img src="/share.png" id="share_image" onclick="copyTextToClipboard(this.name)">
                     </div>
                 </div>
             </div>
@@ -38,21 +52,35 @@
             </div>
         </div>
     </div>
-
+    <div class="alert alert-success d-flex justify-content-center mb-0" role="alert" id="info_dialog">
+        Copied To Clipboard!!!
+    </div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase.js"></script>
 <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
-<script src="init_firebase.js"></script>
+<script src="/init_firebase.js"></script>
 <script>
     var db = firebase.firestore();
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            document.getElementById("btn_sign_in").style.display = "none";
+            document.getElementById("btn_sign_out").style.display = "block";
+        } else {
+            document.getElementById("btn_sign_in").style.display = "block";
+            document.getElementById("btn_sign_out").style.display = "none";
+        }
+    });
+
     var postList = Array();
     var lastPostNumber = 5;
 
     db.collection("Posts").orderBy("postedTime").get().then((querySnapshot) => {
         querySnapshot.docChanges().reverse().forEach((doc) => {
-            postList.push(doc.doc.data())
+            var post = doc.doc.data()
+            post.id = doc.doc.id
+            postList.push(post)
         });
         for (let i = 0; i < 5; i++) {
             db.collection("Users").doc(postList[i].createdBy).get().then((user) => {
@@ -67,7 +95,7 @@
     window.onscroll = function (ev) {
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
             for (let i = 0; i < 5; i++) {
-                if (postList.length > i + lastPostNumber) {
+                if (postList.length - 1 > i + lastPostNumber) {
                     db.collection("Users").doc(postList[i + lastPostNumber].createdBy).get().then((user) => {
                         createPost(postList[i + lastPostNumber], user.data());
                     });
@@ -77,23 +105,45 @@
         }
     };
 
-
+    function copyTextToClipboard(text) {
+        var link = window.location.hostname;
+        link += "/post/" + text
+        if (!navigator.clipboard) {
+            fallbackCopyTextToClipboard(link);
+            return;
+        }
+        navigator.clipboard.writeText(link).then(function () {
+            console.log(link)
+            $("#info_dialog").toggleClass("come");
+            setTimeout(function () {
+                $("#info_dialog").toggleClass("come");
+            }, 2000);
+        }, function (err) {
+            console.error('Async: Could not copy text: ', err);
+        });
+    }
 
     function createPost(post, user) {
         var post_element = document.getElementById("post_template").cloneNode(true);
         post_element.querySelector("#post_profile_name").innerHTML = "<strong>" + user.name + "</strong>";
         post_element.querySelector("#post_description").innerHTML = post.description;
         if (user.photo != "") {
-            post_element.querySelector("#post_profile_image").src = user.photo;
+            // post_element.querySelector("#post_profile_image").src = user.photo;
         } else {
             post_element.querySelector("#post_profile_image").src = "account_placeholder.png";
         }
-        post_element.querySelector("#post_image").src = post.image;
+        console.log(post)
+        post_element.querySelector("#share_image").name = post.id;
+        // post_element.querySelector("#post_image").src = post.image;
         post_element.classList.remove("d-none");
         post_element.classList.add("d-flex");
         var date = new Date(post.postedTime);
         post_element.querySelector("#post_creation_time").innerHTML = date.getUTCDate() + "/" + (date.getUTCMonth() + 1) + "/" + date.getUTCFullYear();
         document.querySelector('body').appendChild(post_element);
+    }
+
+    function signIn() {
+        window.location.href = "/";
     }
 
     function logOut() {
@@ -102,7 +152,6 @@
         }).catch((error) => {
             console.log(error.message)
         });
-
     }
 </script>
 

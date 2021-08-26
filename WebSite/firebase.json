@@ -18,6 +18,15 @@
       {
         "source": "/account/**",
         "destination": "/show_account.html"
+      },{
+        "source": "/post/**",
+        "destination": "/show_post.html"
+      },{
+        "source": "/policy",
+	"destination": "/policy.html"
+      },{
+        "source": "/terms_and_conditions",
+	"destination": "/terms.html"
       }
     ]
   }

@@ -8,9 +8,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="227.72125mm"
-   height="227.72125mm"
-   viewBox="0 0 227.72125 227.72125"
+   width="135.46666mm"
+   height="135.46666mm"
+   viewBox="0 0 135.46666 135.46666"
    version="1.1"
    id="svg907"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
@@ -36,18 +36,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="452.25211"
-     inkscape:cy="410.53999"
+     inkscape:zoom="0.7"
+     inkscape:cx="327.74218"
+     inkscape:cy="232.60388"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1514"
+     inkscape:window-width="1920"
      inkscape:window-height="1016"
-     inkscape:window-x="50"
+     inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0" />
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata904">
     <rdf:RDF>
@@ -66,17 +66,19 @@
      id="layer1"
      transform="translate(13.825037,-39.544628)">
     <rect
-       style="fill:#1f1f1f;fill-opacity:1;stroke:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;paint-order:fill markers stroke;stroke-opacity:1"
+       style="fill:#1f1f1f;fill-opacity:1;stroke:none;stroke-width:1.78464;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
        id="rect1706"
-       width="227.72125"
-       height="227.72125"
+       width="135.46666"
+       height="135.46666"
        x="-13.825037"
        y="39.544628"
-       rx="31.530396"
-       ry="31.530396" />
+       rx="21.255442"
+       ry="0"
+       inkscape:export-xdpi="96.000008"
+       inkscape:export-ydpi="96.000008" />
     <g
        id="g1704"
-       transform="matrix(0.13326453,0,0,0.13326453,8.2664531,72.601835)"
+       transform="matrix(0.06706627,0,0,0.06688995,4.7220792,71.492576)"
        style="stroke:#c2927b;stroke-opacity:1">
       <path
          class="st0"

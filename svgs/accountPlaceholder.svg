@@ -7,14 +7,14 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="98.841438mm"
-   height="98.841438mm"
-   viewBox="0 0 98.841439 98.841439"
+   width="97.549767mm"
+   height="97.549767mm"
+   viewBox="0 0 97.549767 97.549767"
    version="1.1"
    id="svg887"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    sodipodi:docname="accountPlaceholder.svg"
-   inkscape:export-filename="/home/iqsoft/git/StrayAnimals/WebSite/public/accont_placeholder.png"
+   inkscape:export-filename="/home/iqsoft/git/StrayAnimals/svgs/accountPlaceholder.png"
    inkscape:export-xdpi="97.580002"
    inkscape:export-ydpi="97.580002">
   <defs
@@ -27,17 +27,17 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.98994949"
-     inkscape:cx="320.40733"
-     inkscape:cy="372.20118"
+     inkscape:cx="317.96638"
+     inkscape:cy="208.13582"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1514"
+     inkscape:window-width="1920"
      inkscape:window-height="1016"
-     inkscape:window-x="50"
+     inkscape:window-x="0"
      inkscape:window-y="27"
-     inkscape:window-maximized="0" />
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata884">
     <rdf:RDF>
@@ -54,22 +54,22 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-0.57928181,-0.57928181)">
+     transform="translate(-1.2251167,-1.2251167)">
     <circle
-       style="fill:none;stroke:#000000;stroke-width:5.29167;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       style="fill:none;stroke:#121212;stroke-width:4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke;opacity:0.99999999"
        id="path839"
        cx="50"
        cy="50"
        r="46.774883" />
     <ellipse
-       style="fill:none;stroke:#000000;stroke-width:5.29167;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       style="fill:none;stroke:#121212;stroke-width:5.29167;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke;opacity:0.99999999"
        id="path839-3-6"
        cx="50"
        cy="45"
        rx="21.875755"
        ry="21.875753" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:5.29167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;stroke:#121212;stroke-width:5.29167;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;opacity:0.99999999"
        d="m 16.206486,82.983985 c 0,0 30.923388,-35.606879 68.381741,-0.356002"
        id="path1500" />
   </g>

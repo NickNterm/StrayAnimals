@@ -1,6 +1,49 @@
 body{
     font-size: 14px;
     line-height: 18px;
+    background-color: #121212;
+}
+
+.card-header{
+    color: white;
+    background-color: #1D1D1D;
+}
+.card-footer{
+    color: white;
+    background-color: #1D1D1D;
+}
+
+nav{
+    background-color: #1D1D1D;
+}
+
+#share_image{
+    width: 22px;
+    height: 22px;
+}
+
+#info_dialog{
+    position: fixed;
+    width: 20rem;
+    bottom: -100px;
+    z-index: 4;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: .6s linear;
+}
+
+#info_dialog.come{
+    bottom: 0;
+}
+
+.card{
+    border: 0px !important;
+    border-radius: 50px !important;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #C2927B !important;
+    border-color: #C2927B !important;
 }
 
 #post_profile_image{
@@ -23,4 +66,8 @@ body{
     height: 400px;
     object-fit: cover;
     display:block;
+}
+
+#nav_bar_title {
+    font-family: 'Sen', sans-serif;
 }

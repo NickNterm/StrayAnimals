@@ -9,24 +9,14 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_icon"
+        android:icon="@mipmap/ic_app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_icon"
+        android:roundIcon="@mipmap/ic_app_icon_round"
         android:supportsRtl="true"
-
         android:theme="@style/MyTheme">
-
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/.
-        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyBJ_GemZAfYWec9QLhTa733ACvvfgG4iZo" />
 
         <activity
             android:name=".activities.ShowLocationActivity"
