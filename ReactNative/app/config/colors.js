@@ -10,4 +10,5 @@ export default {
   secondary: "#4ecdc4",
   errorRed: "#ed685f",
   outlineHighlight: "#e6e6e6",
+  successGreen: "#4BB543",
 };

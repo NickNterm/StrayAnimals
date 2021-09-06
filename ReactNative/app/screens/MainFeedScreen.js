@@ -9,7 +9,8 @@ function MainFeedScreen({ navigation, route }) {
   const [refreshing, setRefreshing] = React.useState(false);
 
   var db = firebase.firestore();
-  var myUserId = firebase.auth().currentUser.uid;
+  var curUser = firebase.auth().currentUser;
+  var myUserId = curUser.isAnonymous ? null : curUser.uid;
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);

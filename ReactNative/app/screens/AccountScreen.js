@@ -82,11 +82,6 @@ function AccountScreen({ navigation, route }) {
         setRefreshing(false);
       });
   });
-
-  function updateProfile() {
-    navigation.navigate("EditAccount", { user: mUser });
-  }
-
   return (
     <View style={{ height: "100%", backgroundColor: "#fff" }}>
       <View style={{ padding: 10 }}>
@@ -120,25 +115,6 @@ function AccountScreen({ navigation, route }) {
         <Text>Email: {mUser.email}</Text>
         {mUser.showPhone ? <Text>Phone: {mUser.phone}</Text> : null}
       </View>
-      {mUser.id == firebase.auth().currentUser.uid ? (
-        <TouchableHighlight
-          style={[
-            buttonStyle.buttonOutlined,
-            {
-              width: "90%",
-              marginTop: 5,
-              paddingTop: 2,
-              paddingBottom: 2,
-              alignSelf: "center",
-              marginBottom: 5,
-            },
-          ]}
-          underlayColor={colors.outlineHighlight}
-          onPress={updateProfile}
-        >
-          <Text style={buttonStyle.buttonOutlinedText}>Edit Profile</Text>
-        </TouchableHighlight>
-      ) : null}
       {userPostList.length != 0 ? (
         <FlatList
           refreshControl={
@@ -151,7 +127,11 @@ function AccountScreen({ navigation, route }) {
             <PostItem
               key={index}
               item={item}
-              currentUser={mUser.id.toString()}
+              currentUser={
+                firebase.auth().currentUser.isAnonymous
+                  ? null
+                  : firebase.auth().currentUser.uid
+              }
               navigation={navigation}
             />
           )}

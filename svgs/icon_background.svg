@@ -8,14 +8,14 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="135.46666mm"
-   height="135.46666mm"
-   viewBox="0 0 135.46666 135.46666"
+   width="114.3mm"
+   height="114.3mm"
+   viewBox="0 0 114.3 114.3"
    version="1.1"
    id="svg907"
    inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    sodipodi:docname="icon_background.svg"
-   inkscape:export-filename="/home/iqsoft/git/StrayAnimals/svgs/icon.png"
+   inkscape:export-filename="/home/iqsoft/git/StrayAnimals/svgs/adaptive-icon.png"
    inkscape:export-xdpi="57.108414"
    inkscape:export-ydpi="57.108414">
   <defs
@@ -36,9 +36,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="327.74218"
-     inkscape:cy="232.60388"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="293.30257"
+     inkscape:cy="219.30159"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
@@ -66,19 +66,19 @@
      id="layer1"
      transform="translate(13.825037,-39.544628)">
     <rect
-       style="fill:#1f1f1f;fill-opacity:1;stroke:none;stroke-width:1.78464;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       style="fill:#1f1f1f;fill-opacity:1;stroke:none;stroke-width:1.50579;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
        id="rect1706"
-       width="135.46666"
-       height="135.46666"
+       width="114.3"
+       height="114.3"
        x="-13.825037"
        y="39.544628"
        rx="21.255442"
-       ry="0"
+       ry="21.255442"
        inkscape:export-xdpi="96.000008"
        inkscape:export-ydpi="96.000008" />
     <g
        id="g1704"
-       transform="matrix(0.06706627,0,0,0.06688995,4.7220792,71.492576)"
+       transform="matrix(0.04713471,0,0,0.04701079,7.8846273,70.970642)"
        style="stroke:#c2927b;stroke-opacity:1">
       <path
          class="st0"

@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   ActivityIndicator,
   SafeAreaView,
+  TouchableWithoutFeedback,
 } from "react-native";
 import colors from "../config/colors";
 
@@ -34,6 +35,7 @@ function SignInScreen({ navigation }) {
         // ..
       });
   }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={[{ marginTop: 10 }, styles.cardView]}>
@@ -65,6 +67,7 @@ function SignInScreen({ navigation }) {
             )}
           </View>
         </TouchableHighlight>
+
         {errorMessage != "" ? (
           <Text
             style={{
@@ -80,6 +83,19 @@ function SignInScreen({ navigation }) {
             {errorMessage}
           </Text>
         ) : null}
+        <TouchableWithoutFeedback
+          onPress={() => navigation.navigate("ForgetPassword")}
+        >
+          <Text
+            style={{
+              alignSelf: "flex-start",
+              marginStart: "5%",
+              color: colors.textGray,
+            }}
+          >
+            Forgot Password?
+          </Text>
+        </TouchableWithoutFeedback>
       </View>
     </SafeAreaView>
   );

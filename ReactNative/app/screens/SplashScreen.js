@@ -11,33 +11,58 @@ function SplashScreen({ navigation }) {
   setTimeout(function () {
     var removeListener = firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        db.collection("Posts")
-          .limit(100)
-          .orderBy("postedTime")
-          .get()
-          .then((querySnapshot) => {
-            querySnapshot
-              .docChanges()
-              .reverse()
-              .forEach((doc) => {
-                var post = doc.doc.data();
-                post.id = doc.doc.id;
-                postList.push(post);
-              });
-            db.collection("Users")
-              .doc(user.uid)
-              .get()
-              .then((mUser) => {
-                navigation.replace("MainScreen", {
-                  postList: postList,
-                  user: mUser.data(),
+        if (user.isAnonymous) {
+          db.collection("Posts")
+            .limit(100)
+            .orderBy("postedTime")
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot
+                .docChanges()
+                .reverse()
+                .forEach((doc) => {
+                  var post = doc.doc.data();
+                  post.id = doc.doc.id;
+                  postList.push(post);
                 });
-                removeListener();
+              navigation.replace("MainScreen", {
+                postList: postList,
+                user: null,
               });
-          })
-          .catch((error) => {
-            console.log("Error getting documents: ", error);
-          });
+              removeListener();
+            })
+            .catch((error) => {
+              console.log("Error getting documents: ", error);
+            });
+        } else {
+          db.collection("Posts")
+            .limit(100)
+            .orderBy("postedTime")
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot
+                .docChanges()
+                .reverse()
+                .forEach((doc) => {
+                  var post = doc.doc.data();
+                  post.id = doc.doc.id;
+                  postList.push(post);
+                });
+              db.collection("Users")
+                .doc(user.uid)
+                .get()
+                .then((mUser) => {
+                  navigation.replace("MainScreen", {
+                    postList: postList,
+                    user: mUser.data(),
+                  });
+                  removeListener();
+                });
+            })
+            .catch((error) => {
+              console.log("Error getting documents: ", error);
+            });
+        }
       } else {
         navigation.replace("IntroScreen");
         removeListener();

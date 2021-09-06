@@ -8,7 +8,7 @@ import MainFeedScreen from "./MainFeedScreen";
 import UploadScreen from "./UploadScreen";
 import MapScreen from "./MapScreen";
 import AccountScreen from "./AccountScreen";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import YouHaveToSignInScreen from "./YouHaveToSignInScreen";
 const Tab = createBottomTabNavigator();
 function MainScreen({ route, navigation }) {
   const { postList, user } = route.params;
@@ -31,7 +31,7 @@ function MainScreen({ route, navigation }) {
       />
       <Tab.Screen
         name="Upload"
-        component={UploadScreen}
+        component={user != null ? UploadScreen : YouHaveToSignInScreen}
         screenOptions={{
           toolbar: false,
         }}
@@ -53,8 +53,8 @@ function MainScreen({ route, navigation }) {
       />
       <Tab.Screen
         name="Account"
-        component={AccountScreen}
-        initialParams={{ user: user }}
+        component={user != null ? AccountScreen : YouHaveToSignInScreen}
+        initialParams={user != null ? { user: user } : null}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="account-circle" color={color} size={size} />

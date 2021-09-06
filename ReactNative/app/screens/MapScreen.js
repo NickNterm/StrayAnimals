@@ -15,7 +15,8 @@ function MapScreen({ navigation, route }) {
   const [postList, setPostList] = React.useState(route.params?.postList);
   const [mMap, setMap] = React.useState(null);
   const [post, setPostToShow] = React.useState(postList[0]);
-  var myUserId = firebase.auth().currentUser.uid;
+  var curUser = firebase.auth().currentUser;
+  var myUserId = curUser.isAnonymous ? null : curUser.uid;
   var [bottomSheet, setBottomeSheet] = React.useState(null);
   var markerList = [];
   React.useEffect(() => {

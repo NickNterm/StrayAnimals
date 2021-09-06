@@ -34,40 +34,43 @@ function PostItem(props) {
         setUser(doc.data());
       });
   }
+  if (currentUser == null) {
+  }
 
   const animationValue = useRef(new Animated.Value(1)).current;
   const scaleAnimation = () => {
-    console.log("like " + like);
-    Animated.timing(animationValue, {
-      toValue: 0.9,
-      duration: 200,
-      useNativeDriver: true,
-    }).start(() => {
-      if (!like && !item.likeIdList.includes(currentUser)) {
-        item.likeIdList.push(currentUser);
-        db.collection("Posts")
-          .doc(item.id)
-          .update({ likeIdList: item.likeIdList });
-      } else if (like && item.likeIdList.includes(currentUser)) {
-        item.likeIdList.splice(item.likeIdList.indexOf(currentUser), 1);
-        db.collection("Posts")
-          .doc(item.id)
-          .update({ likeIdList: item.likeIdList });
-      }
-      setLiked(!like);
-
+    if (currentUser != null) {
       Animated.timing(animationValue, {
-        toValue: 1.1,
+        toValue: 0.9,
         duration: 200,
         useNativeDriver: true,
       }).start(() => {
+        if (!like && !item.likeIdList.includes(currentUser)) {
+          item.likeIdList.push(currentUser);
+          db.collection("Posts")
+            .doc(item.id)
+            .update({ likeIdList: item.likeIdList });
+        } else if (like && item.likeIdList.includes(currentUser)) {
+          item.likeIdList.splice(item.likeIdList.indexOf(currentUser), 1);
+          db.collection("Posts")
+            .doc(item.id)
+            .update({ likeIdList: item.likeIdList });
+        }
+        setLiked(!like);
+
         Animated.timing(animationValue, {
-          toValue: 1,
+          toValue: 1.1,
           duration: 200,
           useNativeDriver: true,
-        }).start();
+        }).start(() => {
+          Animated.timing(animationValue, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true,
+          }).start();
+        });
       });
-    });
+    }
   };
 
   function showLocation() {
@@ -186,21 +189,34 @@ function PostItem(props) {
       </TouchableWithoutFeedback>
 
       <View style={styles.underPhotoView}>
-        <TouchableWithoutFeedback onPress={scaleAnimation}>
-          <Animated.View style={{ transform: [{ scale: animationValue }] }}>
-            <Image
-              resizeMode="contain"
-              style={styles.like}
-              source={
-                like
-                  ? require("../assets/dog_paw_filled.png")
-                  : require("../assets/dog_paw_outline.png")
-              }
-            />
-          </Animated.View>
-        </TouchableWithoutFeedback>
+        {currentUser != null ? (
+          <TouchableWithoutFeedback onPress={scaleAnimation}>
+            <Animated.View
+              style={{
+                transform: [{ scale: animationValue }],
+                marginStart: 10,
+              }}
+            >
+              <Image
+                resizeMode="contain"
+                style={styles.like}
+                source={
+                  like
+                    ? require("../assets/dog_paw_filled.png")
+                    : require("../assets/dog_paw_outline.png")
+                }
+              />
+            </Animated.View>
+          </TouchableWithoutFeedback>
+        ) : null}
+
         <TouchableNativeFeedback onPress={onShare}>
-          <EvilIcons name="share-google" color={"#000"} size={36} />
+          <EvilIcons
+            name="share-google"
+            color={"#000"}
+            size={36}
+            style={{ marginStart: 5 }}
+          />
         </TouchableNativeFeedback>
         <View style={styles.bottomButtons}>
           <TouchableWithoutFeedback onPress={showLocation}>
@@ -260,7 +276,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     flexDirection: "row",
     marginTop: 5,
-    marginStart: 10,
   },
 });
 

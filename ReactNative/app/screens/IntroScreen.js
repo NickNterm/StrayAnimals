@@ -10,8 +10,16 @@ import {
 } from "react-native";
 
 import colors from "../config/colors";
-
+import firebase from "../database/Firebase.js";
 function IntroScreen({ navigation }) {
+  function loginAsGuest() {
+    firebase
+      .auth()
+      .signInAnonymously()
+      .then(() => {
+        navigation.navigate("SplashScreen");
+      });
+  }
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.titleText}>StrayAnimals</Text>
@@ -37,6 +45,13 @@ function IntroScreen({ navigation }) {
         onPress={() => navigation.navigate("SignUp")}
       >
         <Text style={buttonStyle.buttonOutlinedText}>Sign Up</Text>
+      </TouchableHighlight>
+      <TouchableHighlight
+        style={[{ width: "90%", marginTop: 5 }, buttonStyle.buttonOutlined]}
+        underlayColor={colors.outlineHighlight}
+        onPress={() => loginAsGuest()}
+      >
+        <Text style={buttonStyle.buttonOutlinedText}>Continue as a guest</Text>
       </TouchableHighlight>
     </SafeAreaView>
   );
