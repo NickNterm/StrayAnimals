@@ -1,13 +1,7 @@
 import React from "react";
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Image,
-  TouchableHighlight,
-  Text,
-} from "react-native";
+import { View, StyleSheet, Dimensions, Image } from "react-native";
 import MapView from "react-native-maps";
+import MyButton from "../components/MyButton";
 import colors from "../config/colors";
 function SelectLocationMap({ navigation }) {
   var mMap = null;
@@ -41,26 +35,21 @@ function SelectLocationMap({ navigation }) {
           position: "absolute",
         }}
       />
-      <TouchableHighlight
-        style={[
-          {
-            width: "90%",
-            marginTop: 5,
-            alignSelf: "center",
-            position: "absolute",
-            bottom: 10,
-          },
-          buttonStyle.buttonFilled,
-        ]}
-        underlayColor={colors.primaryHighlight}
-        onPress={selectLocation}
-      >
-        <Text style={buttonStyle.buttonFilledText}>Select</Text>
-      </TouchableHighlight>
+      <MyButton
+        type={"Filled"}
+        text={"Select"}
+        style={{
+          width: "90%",
+          marginTop: 5,
+          alignSelf: "center",
+          position: "absolute",
+          bottom: 10,
+        }}
+        onClick={selectLocation}
+      />
     </View>
   );
 }
-const buttonStyle = require("../styles/ButtonStyles");
 const styles = StyleSheet.create({
   container: {
     flex: 1,

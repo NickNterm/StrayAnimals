@@ -2,27 +2,26 @@ import React from "react";
 import {
   View,
   StyleSheet,
-  TouchableHighlight,
-  Text,
+  FlatList,
   Image,
-  AppRegistry,
   TouchableWithoutFeedback,
 } from "react-native";
-import { SliderBox } from "react-native-image-slider-box";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 import colors from "../config/colors";
+import MyButton from "../components/MyButton";
+import { Dimensions } from "react-native";
+import { Platform } from "react-native";
 
 function UploadScreen({ navigation }) {
   function continueUpload() {
     navigation.navigate("UploadDetails", { imageList: imageList });
   }
-
-  const emptyList = [];
-  const [imageList, setImageList] = React.useState(emptyList);
+  const [imageList, setImageList] = React.useState([]);
   const [showAddButton, setShowAddButton] = React.useState(true);
   const [showList, setShowList] = React.useState(false);
+  const [refresh, setRefresh] = React.useState(false);
 
   React.useEffect(() => {
     (async () => {
@@ -46,8 +45,11 @@ function UploadScreen({ navigation }) {
 
     if (!result.cancelled) {
       const list = imageList;
-      list.push(result.uri);
+      console.log(result.uri);
+      list.push({ source: result.uri, id: imageList.length });
       setImageList(list);
+      setRefresh(true);
+      setRefresh(false);
       if (imageList.length > 0) {
         setShowList(true);
         navigation.setOptions({
@@ -70,68 +72,70 @@ function UploadScreen({ navigation }) {
 
   return (
     <View style={{ backgroundColor: "#fff", height: "100%" }}>
-      {showList ? (
-        <TouchableWithoutFeedback>
-          <SliderBox
-            dotColor={colors.primary}
-            resizeMode="cover"
-            style={styles.postImage}
-            images={imageList}
-            dotStyle={{
-              width: 10,
-              height: 10,
-              borderRadius: 3,
-              marginHorizontal: 0,
-              padding: 0,
-              margin: 0,
+      <View>
+        {showList ? (
+          <FlatList
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            data={imageList}
+            extraData={refresh}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View>
+                <Image
+                  style={styles.imageView}
+                  source={{
+                    uri: item.source,
+                  }}
+                />
+              </View>
+            )}
+          />
+        ) : (
+          <TouchableWithoutFeedback onPress={pickImage}>
+            <Image
+              resizeMode="cover"
+              style={styles.postImage}
+              source={require("../assets/add_image.png")}
+            />
+          </TouchableWithoutFeedback>
+        )}
+        {showAddButton ? (
+          <MyButton
+            type={"Filled"}
+            text={"Add Image"}
+            style={{ width: "90%", marginTop: 5, alignSelf: "center" }}
+            onClick={pickImage}
+          />
+        ) : null}
+        {imageList.length > 0 ? (
+          <MyButton
+            type={"Outlined"}
+            text={"Remove Selection"}
+            style={{ width: "90%", marginTop: 5, alignSelf: "center" }}
+            onClick={() => {
+              setImageList([]);
+              setShowList(false);
             }}
           />
-        </TouchableWithoutFeedback>
-      ) : (
-        <TouchableWithoutFeedback onPress={pickImage}>
-          <Image
-            resizeMode="cover"
-            style={styles.postImage}
-            source={require("../assets/add_image.png")}
-          />
-        </TouchableWithoutFeedback>
-      )}
-      {showAddButton ? (
-        <TouchableHighlight
-          style={[
-            { width: "90%", marginTop: 5, alignSelf: "center" },
-            buttonStyle.buttonFilled,
-          ]}
-          underlayColor={colors.primaryHighlight}
-          onPress={pickImage}
-        >
-          <Text style={buttonStyle.buttonFilledText}>Add Image</Text>
-        </TouchableHighlight>
-      ) : null}
-      {imageList.length > 0 ? (
-        <TouchableHighlight
-          style={[
-            { width: "90%", marginTop: 5, alignSelf: "center" },
-            buttonStyle.buttonOutlined,
-          ]}
-          underlayColor={colors.outlineHighlight}
-          onPress={() => {
-            setImageList([]);
-            setShowList(false);
-          }}
-        >
-          <Text style={buttonStyle.buttonOutlinedText}>Remove Selection</Text>
-        </TouchableHighlight>
-      ) : null}
+        ) : null}
+      </View>
     </View>
   );
 }
-const buttonStyle = require("../styles/ButtonStyles");
 const styles = StyleSheet.create({
   postImage: {
     height: undefined,
     width: "100%",
     aspectRatio: 4 / 5,
+  },
+  imageView: {
+    height: undefined,
+    width: 200,
+    aspectRatio: 4 / 5,
+    marginVertical: 10,
+    marginHorizontal: 5,
+    borderRadius: 10,
   },
 });
 

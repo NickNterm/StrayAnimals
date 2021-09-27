@@ -6,16 +6,12 @@ import {
   Image,
   FlatList,
   RefreshControl,
-  TouchableHighlight,
-  Alert,
 } from "react-native";
 
-import { Ionicons } from "@expo/vector-icons";
-
-import colors from "../config/colors";
+import { Feather } from "@expo/vector-icons";
 
 import firebase from "../database/Firebase.js";
-import PostItem from "../Element/PostItem";
+import PostItem from "../components/PostItem";
 
 function AccountScreen({ navigation, route }) {
   const [mUser, setUser] = React.useState(route.params?.user);
@@ -42,20 +38,22 @@ function AccountScreen({ navigation, route }) {
   }
   React.useEffect(() => {
     updatePostList();
-    if (mUser.id == firebase.auth().currentUser.uid) {
-      navigation.setOptions({
-        headerRight: (props) => (
-          <Ionicons
-            name="settings"
-            size={24}
-            color="black"
-            style={{ marginEnd: 10 }}
-            onPress={() => {
-              navigation.navigate("Settings", { mUser: mUser });
-            }}
-          />
-        ),
-      });
+    if (firebase.auth().currentUser != null) {
+      if (mUser.id == firebase.auth().currentUser.uid) {
+        navigation.setOptions({
+          headerRight: (props) => (
+            <Feather
+              name="settings"
+              size={24}
+              color="black"
+              style={{ marginEnd: 15 }}
+              onPress={() => {
+                navigation.navigate("Settings", { mUser: mUser });
+              }}
+            />
+          ),
+        });
+      }
     }
   }, []);
 
@@ -128,7 +126,7 @@ function AccountScreen({ navigation, route }) {
               key={index}
               item={item}
               currentUser={
-                firebase.auth().currentUser.isAnonymous
+                firebase.auth().currentUser == null
                   ? null
                   : firebase.auth().currentUser.uid
               }
@@ -160,7 +158,7 @@ function AccountScreen({ navigation, route }) {
     </View>
   );
 }
-const buttonStyle = require("../styles/ButtonStyles");
+
 const styles = StyleSheet.create({
   accountImage: {
     marginEnd: 10,

@@ -1,22 +1,15 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  Image,
-  TouchableWithoutFeedback,
-  Text,
-} from "react-native";
+import { StyleSheet, View, Dimensions, Image } from "react-native";
 import MapView from "react-native-maps";
 import RBSheet from "react-native-raw-bottom-sheet";
 import firebase from "../database/Firebase.js";
-import PostItem from "../Element/PostItem.js";
+import PostItem from "../components/PostItem.js";
 function MapScreen({ navigation, route }) {
   const [postList, setPostList] = React.useState(route.params?.postList);
   const [mMap, setMap] = React.useState(null);
   const [post, setPostToShow] = React.useState(postList[0]);
   var curUser = firebase.auth().currentUser;
-  var myUserId = curUser.isAnonymous ? null : curUser.uid;
+  var myUserId = curUser == null ? null : curUser.uid;
   var [bottomSheet, setBottomeSheet] = React.useState(null);
   var markerList = [];
   React.useEffect(() => {

@@ -4,18 +4,27 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  TouchableHighlight,
-  ActivityIndicator,
   SafeAreaView,
   Image,
   TouchableWithoutFeedback,
-  Linking,
 } from "react-native";
 import colors from "../config/colors";
-import * as ImagePicker from "expo-image-picker";
 import CheckBox from "react-native-check-box";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebase from "../database/Firebase.js";
+import InputStyles from "../styles/InputStyles";
+import MyButton from "../components/MyButton";
+const images = [
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Fcat.png?alt=media&token=80e0a5bc-c5c3-4c52-9ab0-d2884334932c",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Fdog.png?alt=media&token=e9bf3193-51c4-4a4f-8601-95008bdffd03",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Felephant.png?alt=media&token=4af6efec-004d-4283-a498-d1e31b471e4f",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Ffox.png?alt=media&token=43cfadf5-7878-4cb4-bed7-836c1e62c651",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Fmonkey.png?alt=media&token=9f01b29b-45a7-4ee5-be61-1dfffbda3be5",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Fpanda.png?alt=media&token=9f7eae57-dc84-4f92-97d7-fc9b65153dc8",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Fpig.png?alt=media&token=a07c5852-9864-4c63-b400-3f484973aa2c",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Fsquirrel.png?alt=media&token=2d552f7c-7a01-4441-811f-4b140da6dea6",
+];
+
 function SignUpScreen({ navigation }) {
   const [errorMessage, setErrorMessage] = React.useState("");
   const [loading, setIsLoading] = React.useState(false);
@@ -26,6 +35,14 @@ function SignUpScreen({ navigation }) {
   const [repeat, onChangeRepeat] = React.useState("");
   const [photo, onPhotoChange] = React.useState("");
   const [checked, onChangeChecked] = React.useState(true);
+
+  if (photo == "") {
+    onPhotoChange(images[Math.floor(Math.random() * images.length)]);
+  }
+  function changePhoto(value) {
+    console.log("DOCE");
+    onPhotoChange(value);
+  } /*
   React.useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -49,7 +66,7 @@ function SignUpScreen({ navigation }) {
     if (!result.cancelled) {
       onPhotoChange(result.uri);
     }
-  };
+  };*/
   function validateForm() {
     var isValid = true;
     var errorMessage = "";
@@ -80,6 +97,15 @@ function SignUpScreen({ navigation }) {
   }
   var db = firebase.firestore();
 
+  async function changeIntro() {
+    try {
+      await AsyncStorage.setItem("ShowIntro", "false");
+      navigation.navigate("SplashScreen");
+    } catch (e) {
+      // saving error
+    }
+  }
+
   function signUp() {
     setIsLoading(true);
     if (validateForm()) {
@@ -100,6 +126,7 @@ function SignUpScreen({ navigation }) {
             .doc(userCredential.user.uid)
             .set(user)
             .then(() => {
+              changeIntro();
               navigation.replace("SplashScreen");
               setIsLoading(false);
             })
@@ -119,125 +146,110 @@ function SignUpScreen({ navigation }) {
   }
 
   function openLink() {
-    var url = "http://strayanimalsapp.web.app/terms_and_conditions";
-    Linking.canOpenURL(url).then((supported) => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        console.log("Don't know how to open URI: " + url);
-      }
-    });
+    navigation.navigate("Terms");
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[{ marginTop: 10 }, styles.cardView]}>
-        <TouchableWithoutFeedback onPress={pickImage}>
-          <Image
-            resizeMode="cover"
-            style={styles.profileImage}
-            source={
-              photo == ""
-                ? require("../assets/accountPlaceholder.png")
-                : { uri: photo }
-            }
-          />
-        </TouchableWithoutFeedback>
-        <TextInput
-          style={inputStyle.input}
-          onChangeText={onChangeName}
-          placeholder={"Name"}
-          value={name}
+      <TouchableWithoutFeedback
+        onPress={() => {
+          navigation.navigate("ProfilePhoto", { image: changePhoto });
+        }}
+      >
+        <Image
+          resizeMode="cover"
+          style={styles.profileImage}
+          source={{ uri: photo }}
         />
-        <TextInput
-          style={inputStyle.input}
-          value={email}
-          placeholder={"Email"}
-          autoCapitalize={"none"}
-          onChangeText={onChangeEmail}
-        />
-        <TextInput
-          style={inputStyle.input}
-          value={phone}
-          keyboardType="numeric"
-          placeholder={"Phone"}
-          onChangeText={onChangePhone}
-        />
-        <TextInput
-          style={inputStyle.input}
-          value={password}
-          secureTextEntry={true}
-          placeholder={"Password"}
-          onChangeText={onChangePassword}
-        />
-        <TextInput
-          style={inputStyle.input}
-          value={repeat}
-          secureTextEntry={true}
-          placeholder={"Repeat"}
-          onChangeText={onChangeRepeat}
-        />
+      </TouchableWithoutFeedback>
+      <TextInput
+        style={InputStyles.input}
+        onChangeText={onChangeName}
+        placeholder={"Name"}
+        value={name}
+      />
+      <TextInput
+        style={InputStyles.input}
+        value={email}
+        placeholder={"Email"}
+        autoCapitalize={"none"}
+        onChangeText={onChangeEmail}
+      />
+      <TextInput
+        style={InputStyles.input}
+        value={phone}
+        keyboardType="numeric"
+        placeholder={"Phone"}
+        onChangeText={onChangePhone}
+      />
+      <TextInput
+        style={InputStyles.input}
+        value={password}
+        secureTextEntry={true}
+        placeholder={"Password"}
+        onChangeText={onChangePassword}
+      />
+      <TextInput
+        style={InputStyles.input}
+        value={repeat}
+        secureTextEntry={true}
+        placeholder={"Repeat"}
+        onChangeText={onChangeRepeat}
+      />
 
-        <View
-          style={{
-            width: "90%",
-            flexDirection: "row",
-            alignSelf: "center",
+      <View
+        style={{
+          width: "80%",
+          flexDirection: "row",
+          alignSelf: "center",
+        }}
+      >
+        <CheckBox
+          style={{ flex: 1, padding: 10 }}
+          onClick={() => {
+            onChangeChecked(!checked);
           }}
-        >
-          <CheckBox
-            style={{ flex: 1, padding: 10 }}
-            onClick={() => {
-              onChangeChecked(!checked);
-            }}
-            isChecked={checked}
-            rightText={"Show my phone to Everyone"}
-          />
-        </View>
-        <TouchableHighlight
-          style={[{ width: "90%" }, buttonStyle.buttonFilled]}
-          underlayColor={colors.primaryHighlight}
-          onPress={signUp}
-        >
-          {loading ? (
-            <ActivityIndicator size={22} color="#fff" />
-          ) : (
-            <Text style={buttonStyle.buttonFilledText}>Sign Up</Text>
-          )}
-        </TouchableHighlight>
-        {errorMessage != "" ? (
-          <Text
-            style={{
-              width: "90%",
-              textAlign: "center",
-              marginTop: 5,
-              paddingVertical: 10,
-              borderRadius: 5,
-              color: "#fff",
-              backgroundColor: colors.errorRed,
-            }}
-          >
-            {errorMessage}
-          </Text>
-        ) : null}
+          isChecked={checked}
+          rightText={"Show my phone to Everyone"}
+        />
+      </View>
+      <MyButton
+        type={"Filled"}
+        text={"Sign Up"}
+        style={{ width: "80%" }}
+        onClick={signUp}
+        loading={loading}
+      />
+      {errorMessage != "" ? (
         <Text
           style={{
+            width: "80%",
             textAlign: "center",
-            marginTop: 10,
-            color: colors.textGrayBlack,
+            marginTop: 5,
+            paddingVertical: 10,
+            borderRadius: 5,
+            color: "#fff",
+            backgroundColor: colors.errorRed,
           }}
         >
-          By signing up, you agree to our{"\n"}
-          <TouchableWithoutFeedback onPress={openLink}>
-            <Text style={{ fontWeight: "bold" }}>Terms {"&"} Conditions</Text>
-          </TouchableWithoutFeedback>
+          {errorMessage}
         </Text>
-      </View>
+      ) : null}
+      <Text
+        style={{
+          textAlign: "center",
+          marginTop: 10,
+          color: colors.textGrayBlack,
+        }}
+      >
+        By signing up, you agree to our{"\n"}
+        <TouchableWithoutFeedback onPress={openLink}>
+          <Text style={{ fontWeight: "bold" }}>Terms {"&"} Conditions</Text>
+        </TouchableWithoutFeedback>
+      </Text>
     </SafeAreaView>
   );
 }
-const buttonStyle = require("../styles/ButtonStyles");
-const inputStyle = require("../styles/InputStyles");
 const styles = StyleSheet.create({
   profileImage: {
     width: 100,
@@ -251,17 +263,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontSize: 30,
   },
-  cardView: {
-    alignContent: "center",
-    maxWidth: 400,
-    borderRadius: 5,
-    marginHorizontal: 20,
-    borderColor: 0,
-    borderWidth: 1,
-    alignItems: "center",
-  },
   container: {
     backgroundColor: "#fff",
+    alignItems: "center",
+    paddingTop: 10,
     height: "100%",
   },
 });

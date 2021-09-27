@@ -5,18 +5,27 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  TouchableHighlight,
-  ActivityIndicator,
   Image,
   TouchableWithoutFeedback,
 } from "react-native";
-import * as ImagePicker from "expo-image-picker";
 import CheckBox from "react-native-check-box";
 
 import colors from "../config/colors";
 
 import firebase from "../database/Firebase.js";
-
+import MyButton from "../components/MyButton";
+import InputStyles from "../styles/InputStyles";
+import { Platform } from "react-native";
+const images = [
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Fcat.png?alt=media&token=80e0a5bc-c5c3-4c52-9ab0-d2884334932c",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Fdog.png?alt=media&token=e9bf3193-51c4-4a4f-8601-95008bdffd03",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Felephant.png?alt=media&token=4af6efec-004d-4283-a498-d1e31b471e4f",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Ffox.png?alt=media&token=43cfadf5-7878-4cb4-bed7-836c1e62c651",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Fmonkey.png?alt=media&token=9f01b29b-45a7-4ee5-be61-1dfffbda3be5",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Fpanda.png?alt=media&token=9f7eae57-dc84-4f92-97d7-fc9b65153dc8",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Fpig.png?alt=media&token=a07c5852-9864-4c63-b400-3f484973aa2c",
+  "https://firebasestorage.googleapis.com/v0/b/strayanimalsapp.appspot.com/o/ProfilePhotos%2Fsquirrel.png?alt=media&token=2d552f7c-7a01-4441-811f-4b140da6dea6",
+];
 function UpdateProfileScreen({ navigation, route }) {
   const { user } = route.params;
   const [loading, setIsLoading] = React.useState(false);
@@ -26,6 +35,15 @@ function UpdateProfileScreen({ navigation, route }) {
   const [phone, onChangePhone] = React.useState(user.phone.toString());
   const [errorMessage, setErrorMessage] = React.useState("");
   const [checked, onChangeChecked] = React.useState(user.showPhone);
+
+  if (photo == "") {
+    onPhotoChange(images[Math.floor(Math.random() * images.length)]);
+  }
+
+  function changePhoto(value) {
+    console.log("DOCE");
+    onPhotoChange(value);
+  }
 
   function validateForm() {
     var isValid = true;
@@ -47,64 +65,28 @@ function UpdateProfileScreen({ navigation, route }) {
   function editAccount() {
     setIsLoading(true);
     if (validateForm()) {
-      var upload = async (uri) => {
-        var fileName = uri.split(".");
-        const response = await fetch(uri);
-        const blob = await response.blob();
-        firebase
-          .storage()
-          .ref()
-          .child(
-            "PROFILE_IMAGE_" + Date.now() + "." + fileName[fileName.length - 1]
-          )
-          .put(blob)
-          .then((snapshot) => {
-            snapshot.ref.getDownloadURL().then((downloadURL) => {
-              var mUser = {
-                name: name,
-                phone: parseInt(phone),
-                photo: downloadURL,
-                showPhone: checked,
-              };
-              db.collection("Users")
-                .doc(user.id)
-                .update(mUser)
-                .then(() => {
-                  setIsLoading(false);
-                  navigation.replace("SplashScreen");
-                })
-                .catch((error) => {
-                  setIsLoading(false);
-                  console.log(error);
-                });
-            });
-          })
-          .catch((error) => console.log(error));
+      var mUser = {
+        name: name,
+        phone: parseInt(phone),
+        photo: photo,
+        showPhone: checked,
       };
-      if (photo != user.photo) {
-        upload(photo);
-      } else {
-        var mUser = {
-          name: name,
-          phone: parseInt(phone),
-          showPhone: checked,
-        };
-        db.collection("Users")
-          .doc(user.id)
-          .update(mUser)
-          .then(() => {
-            setIsLoading(false);
-            navigation.replace("SplashScreen");
-          })
-          .catch((error) => {
-            setIsLoading(false);
-            console.log(error);
-          });
-      }
+      db.collection("Users")
+        .doc(user.id)
+        .update(mUser)
+        .then(() => {
+          setIsLoading(false);
+          navigation.replace("SplashScreen");
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.log(error);
+        });
     } else {
       setIsLoading(false);
     }
   }
+  /*
   React.useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -116,7 +98,7 @@ function UpdateProfileScreen({ navigation, route }) {
       }
     })();
   }, []);
-
+  
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -129,58 +111,59 @@ function UpdateProfileScreen({ navigation, route }) {
       onPhotoChange(result.uri);
     }
   };
+*/
 
   return (
     <View style={styles.container}>
-      <View style={[{ marginTop: 10 }, styles.cardView]}>
-        <TouchableWithoutFeedback onPress={pickImage}>
-          <Image
-            resizeMode="cover"
-            style={styles.profileImage}
-            source={
-              photo == ""
-                ? require("../assets/accountPlaceholder.png")
-                : { uri: photo }
-            }
-          />
-        </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          navigation.navigate("ProfilePhoto", { image: changePhoto });
+        }}
+      >
+        <Image
+          resizeMode="cover"
+          style={styles.profileImage}
+          source={{ uri: photo }}
+        />
+      </TouchableWithoutFeedback>
 
-        <TextInput
-          style={inputStyle.input}
-          onChangeText={onChangeName}
-          placeholder={"Name"}
-          value={name}
-        />
-        <TextInput
-          style={inputStyle.input}
-          value={email}
-          placeholder={"Email"}
-        />
-        <TextInput
-          style={inputStyle.input}
-          value={phone}
-          keyboardType="numeric"
-          placeholder={"Phone"}
-          onChangeText={onChangePhone}
-        />
-        {errorMessage != "" ? (
-          <Text
-            style={{
-              width: "90%",
-              textAlign: "center",
-              marginTop: 5,
-              paddingVertical: 10,
-              borderRadius: 5,
-              color: "#fff",
-              backgroundColor: colors.errorRed,
-            }}
-          >
-            {errorMessage}
-          </Text>
-        ) : null}
+      <TextInput
+        style={InputStyles.input}
+        onChangeText={onChangeName}
+        placeholder={"Name"}
+        value={name}
+      />
+      <TextInput
+        style={InputStyles.input}
+        value={email}
+        placeholder={"Email"}
+      />
+      <TextInput
+        style={InputStyles.input}
+        value={phone}
+        keyboardType="numeric"
+        placeholder={"Phone"}
+        onChangeText={onChangePhone}
+      />
+      {errorMessage != "" ? (
+        <Text
+          style={{
+            width: "80%",
+            textAlign: "center",
+            marginTop: 5,
+            paddingVertical: 10,
+            borderRadius: 5,
+            color: "#fff",
+            backgroundColor: colors.errorRed,
+          }}
+        >
+          {errorMessage}
+        </Text>
+      ) : null}
+      {Platform.OS !== "web" ? (
         <View
           style={{
-            width: "90%",
+            width: "80%",
             flexDirection: "row",
             alignSelf: "center",
           }}
@@ -195,24 +178,17 @@ function UpdateProfileScreen({ navigation, route }) {
             rightText={"Show my phone to Everyone"}
           />
         </View>
-        <TouchableHighlight
-          style={[{ width: "90%", marginTop: 5 }, buttonStyle.buttonFilled]}
-          underlayColor={colors.primaryHighlight}
-          onPress={editAccount}
-        >
-          {loading ? (
-            <ActivityIndicator size={22} color="#fff" />
-          ) : (
-            <Text style={buttonStyle.buttonFilledText}>Update Profile</Text>
-          )}
-        </TouchableHighlight>
-      </View>
+      ) : null}
+      <MyButton
+        type={"Filled"}
+        text={"Update Profile"}
+        style={{ width: "80%", marginTop: 5 }}
+        onClick={editAccount}
+        loading={loading}
+      />
     </View>
   );
 }
-
-const buttonStyle = require("../styles/ButtonStyles");
-const inputStyle = require("../styles/InputStyles");
 const styles = StyleSheet.create({
   profileImage: {
     width: 100,
@@ -237,6 +213,8 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: "#fff",
+    paddingTop: 10,
+    alignItems: "center",
     height: "100%",
   },
 });

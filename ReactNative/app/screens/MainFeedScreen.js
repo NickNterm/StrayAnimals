@@ -1,8 +1,9 @@
 import React from "react";
+import { StatusBar } from "react-native";
 import { FlatList, View, RefreshControl } from "react-native";
 
 import firebase from "../database/Firebase.js";
-import PostItem from "../Element/PostItem.js";
+import PostItem from "../components/PostItem.js";
 
 function MainFeedScreen({ navigation, route }) {
   const [postList, setPostList] = React.useState(route.params?.postList);
@@ -10,7 +11,7 @@ function MainFeedScreen({ navigation, route }) {
 
   var db = firebase.firestore();
   var curUser = firebase.auth().currentUser;
-  var myUserId = curUser.isAnonymous ? null : curUser.uid;
+  var myUserId = curUser == null ? null : curUser.uid;
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -39,7 +40,13 @@ function MainFeedScreen({ navigation, route }) {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "#fff",
+        marginTop: StatusBar.currentHeight,
+      }}
+    >
       <FlatList
         keyExtractor={(item) => item.id}
         data={postList}

@@ -2,13 +2,11 @@
 import { StyleSheet } from "react-native";
 
 import colors from "../config/colors";
-
-module.exports = StyleSheet.create({
+var inputStyles = StyleSheet.create({
   input: {
     height: 40,
     margin: 12,
-    width: "90%",
-    borderWidth: 1,
+    width: "80%",
     marginBottom: 0,
     backgroundColor: colors.inputBackgoundGray,
     marginTop: 5,
@@ -17,3 +15,4 @@ module.exports = StyleSheet.create({
     borderRadius: 5,
   },
 });
+export default inputStyles;

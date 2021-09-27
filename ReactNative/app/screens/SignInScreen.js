@@ -9,21 +9,34 @@ import {
   SafeAreaView,
   TouchableWithoutFeedback,
 } from "react-native";
+import MyButton from "../components/MyButton";
 import colors from "../config/colors";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebase from "../database/Firebase.js";
+import InputStyles from "../styles/InputStyles";
 
 function SignInScreen({ navigation }) {
   const [errorMessage, setErrorMessage] = React.useState("");
   const [loading, setIsLoading] = React.useState(false);
   const [email, onChangeEmail] = React.useState("");
   const [pass, onChangePass] = React.useState("");
+
+  async function changeIntro() {
+    try {
+      await AsyncStorage.setItem("ShowIntro", "false");
+      navigation.navigate("SplashScreen");
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   function login() {
     setIsLoading(true);
     firebase
       .auth()
       .signInWithEmailAndPassword(email, pass)
       .then((userCredential) => {
+        changeIntro();
         setIsLoading(false);
         navigation.replace("SplashScreen");
       })
@@ -32,76 +45,63 @@ function SignInScreen({ navigation }) {
         var errorMessage = error.message;
         setErrorMessage(errorMessage);
         console.log(error);
-        // ..
       });
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[{ marginTop: 10 }, styles.cardView]}>
-        <TextInput
-          style={inputStyle.input}
-          onChangeText={onChangeEmail}
-          placeholder={"Email"}
-          autoCapitalize={"none"}
-          value={email}
-        />
-        <TextInput
-          style={inputStyle.input}
-          value={pass}
-          secureTextEntry={true}
-          placeholder={"Password"}
-          onChangeText={onChangePass}
-        />
-
-        <TouchableHighlight
-          style={[{ width: "90%", marginTop: 5 }, buttonStyle.buttonFilled]}
-          underlayColor={colors.primaryHighlight}
-          onPress={login}
+      <TextInput
+        style={InputStyles.input}
+        onChangeText={onChangeEmail}
+        placeholder={"Email"}
+        autoCapitalize={"none"}
+        value={email}
+      />
+      <TextInput
+        style={InputStyles.input}
+        value={pass}
+        secureTextEntry={true}
+        placeholder={"Password"}
+        onChangeText={onChangePass}
+      />
+      <MyButton
+        type={"Filled"}
+        text={"Sign In"}
+        style={{ width: "80%", marginTop: 5 }}
+        onClick={login}
+        loading={loading}
+      />
+      {errorMessage != "" ? (
+        <Text
+          style={{
+            width: "80%",
+            textAlign: "center",
+            marginTop: 5,
+            paddingVertical: 10,
+            borderRadius: 5,
+            color: "#fff",
+            backgroundColor: colors.errorRed,
+          }}
         >
-          <View>
-            {loading ? (
-              <ActivityIndicator size={22} color="#fff" />
-            ) : (
-              <Text style={buttonStyle.buttonFilledText}>Sign In</Text>
-            )}
-          </View>
-        </TouchableHighlight>
-
-        {errorMessage != "" ? (
-          <Text
-            style={{
-              width: "90%",
-              textAlign: "center",
-              marginTop: 5,
-              paddingVertical: 10,
-              borderRadius: 5,
-              color: "#fff",
-              backgroundColor: colors.errorRed,
-            }}
-          >
-            {errorMessage}
-          </Text>
-        ) : null}
-        <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("ForgetPassword")}
+          {errorMessage}
+        </Text>
+      ) : null}
+      <TouchableWithoutFeedback
+        onPress={() => navigation.navigate("ForgetPassword")}
+      >
+        <Text
+          style={{
+            alignSelf: "flex-start",
+            marginStart: "10%",
+            color: colors.textGray,
+          }}
         >
-          <Text
-            style={{
-              alignSelf: "flex-start",
-              marginStart: "5%",
-              color: colors.textGray,
-            }}
-          >
-            Forgot Password?
-          </Text>
-        </TouchableWithoutFeedback>
-      </View>
+          Forgot Password?
+        </Text>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }
-const buttonStyle = require("../styles/ButtonStyles");
-const inputStyle = require("../styles/InputStyles");
 const styles = StyleSheet.create({
   titleText: {
     marginTop: 5,
@@ -110,17 +110,10 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontSize: 30,
   },
-  cardView: {
-    alignContent: "center",
-    maxWidth: 400,
-    borderRadius: 5,
-    marginHorizontal: 20,
-    borderColor: 0,
-    borderWidth: 1,
-    alignItems: "center",
-  },
   container: {
     backgroundColor: "#fff",
+    alignItems: "center",
+    paddingTop: 10,
     height: "100%",
   },
 });

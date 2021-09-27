@@ -1,25 +1,11 @@
+import { StackActions, NavigationActions } from "@react-navigation/native";
 import React from "react";
-import {
-  View,
-  FlatList,
-  Text,
-  Switch,
-  TouchableHighlight,
-  Linking,
-} from "react-native";
+import { Linking } from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
 import colors from "../config/colors";
 import firebase from "../database/Firebase.js";
 function AccountSettingsScreen({ navigation, route }) {
   const { mUser } = route.params;
-  function openLink(url) {
-    Linking.canOpenURL(url).then((supported) => {
-      if (supported) {
-        Linking.openURL(url);
-      } else {
-        console.log("Don't know how to open URI: " + url);
-      }
-    });
-  }
   return (
     <View
       style={{
@@ -28,7 +14,9 @@ function AccountSettingsScreen({ navigation, route }) {
       }}
     >
       <View style={{ margin: 10 }}>
-        <Text style={{ marginStart: 10 }}>Account</Text>
+        <Text style={{ marginStart: 10, fontWeight: "bold", fontSize: 16 }}>
+          Account
+        </Text>
         <View
           style={{
             borderRadius: 5,
@@ -66,7 +54,9 @@ function AccountSettingsScreen({ navigation, route }) {
       </View>
 
       <View style={{ margin: 10 }}>
-        <Text style={{ marginStart: 10 }}>About</Text>
+        <Text style={{ marginStart: 10, fontWeight: "bold", fontSize: 16 }}>
+          About
+        </Text>
         <View
           style={{
             borderRadius: 5,
@@ -78,9 +68,7 @@ function AccountSettingsScreen({ navigation, route }) {
           <TouchableHighlight
             style={{ padding: 10, overflow: "hidden" }}
             underlayColor={colors.inputBackgoundGray}
-            onPress={() =>
-              openLink("http://strayanimalsapp.web.app/terms_and_conditions")
-            }
+            onPress={() => navigation.navigate("Terms")}
           >
             <Text>Terms {"&"} Conditions</Text>
           </TouchableHighlight>
@@ -93,9 +81,24 @@ function AccountSettingsScreen({ navigation, route }) {
           <TouchableHighlight
             style={{ padding: 10, overflow: "hidden" }}
             underlayColor={colors.inputBackgoundGray}
-            onPress={() => openLink("http://strayanimalsapp.web.app/policy")}
+            onPress={() => navigation.navigate("Policy")}
           >
             <Text>Privacy Policy</Text>
+          </TouchableHighlight>
+          <View
+            style={{
+              borderWidth: 0.7,
+              borderColor: colors.inputBackgoundGray,
+            }}
+          />
+          <TouchableHighlight
+            style={{ padding: 10, overflow: "hidden" }}
+            underlayColor={colors.inputBackgoundGray}
+            onPress={() =>
+              Linking.openURL("https://www.freepik.com/vectors/icons")
+            }
+          >
+            <Text>Icons vector created by freepik</Text>
           </TouchableHighlight>
         </View>
       </View>

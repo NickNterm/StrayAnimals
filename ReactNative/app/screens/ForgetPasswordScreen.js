@@ -6,8 +6,11 @@ import {
   Text,
   ActivityIndicator,
 } from "react-native";
+import MyButton from "../components/MyButton";
 import colors from "../config/colors";
 import firebase from "../database/Firebase.js";
+import InputStyles from "../styles/InputStyles";
+
 function ForgetPasswordScreen(props) {
   const [email, onChangeEmail] = React.useState("");
   const [loading, setLoading] = React.useState(false);
@@ -37,38 +40,25 @@ function ForgetPasswordScreen(props) {
     }
   }
   return (
-    <View
-      style={{
-        alignItems: "center",
-        marginTop: 20,
-        width: "90%",
-        alignSelf: "center",
-      }}
-    >
+    <View style={{ flex: 1, backgroundColor: "#fff", alignItems: "center" }}>
       <TextInput
-        style={inputStyle.input}
+        style={InputStyles.input}
         onChangeText={onChangeEmail}
         placeholder={"Email"}
         autoCapitalize={"none"}
         value={email}
       />
-      <TouchableHighlight
-        style={[{ width: "90%", marginTop: 5 }, buttonStyle.buttonFilled]}
-        underlayColor={colors.primaryHighlight}
-        onPress={sendResetEmail}
-      >
-        <View>
-          {loading ? (
-            <ActivityIndicator size={22} color="#fff" />
-          ) : (
-            <Text style={buttonStyle.buttonFilledText}>Send Reset Link</Text>
-          )}
-        </View>
-      </TouchableHighlight>
+      <MyButton
+        type={"Filled"}
+        text={"Send Reset Link"}
+        style={{ width: "80%", marginTop: 5 }}
+        onClick={sendResetEmail}
+        loading={loading}
+      />
       {errorMessage != "" ? (
         <Text
           style={{
-            width: "90%",
+            width: "80%",
             textAlign: "center",
             marginTop: 5,
             paddingVertical: 10,
@@ -98,6 +88,4 @@ function ForgetPasswordScreen(props) {
     </View>
   );
 }
-const buttonStyle = require("../styles/ButtonStyles");
-const inputStyle = require("../styles/InputStyles");
 export default ForgetPasswordScreen;
