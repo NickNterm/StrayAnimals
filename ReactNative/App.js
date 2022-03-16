@@ -22,6 +22,7 @@ import TermsScreen from "./app/screens/TermsScreen";
 import PolicyScreen from "./app/screens/PolicyScreen";
 import SelectProfilePhoto from "./app/screens/SelectProfilePhoto";
 import IntroScreen from "./app/screens/IntroScreen";
+import ShowPost from "./app/screens/ShowPost";
 let ShowLocationInMap;
 if (Platform.OS !== "web") {
   ShowLocationInMap = require("./app/screens/ShowLocationInMap").default;
@@ -67,6 +68,7 @@ export default function App() {
           <Stack.Screen name="EditAccount" component={UpdateProfileScreen} />
           <Stack.Screen name="Settings" component={AccountSettingsScreen} />
           <Stack.Screen name="ProfilePhoto" component={SelectProfilePhoto} />
+          <Stack.Screen name="Post" component={ShowPost} />
           <Stack.Screen
             name="IntroScreen"
             component={IntroScreen}

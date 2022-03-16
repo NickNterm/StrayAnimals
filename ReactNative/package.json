@@ -7,7 +7,8 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "predeploy": "expo build:web",
-    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting"
+    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting",
+    "watch-need-help": "echo 256 | sudo tee -a /proc/sys/fs/inotify/max_user_instances && echo 32768 | sudo tee -a /proc/sys/fs/inotify/max_queued_events && echo 65536 | sudo tee -a /proc/sys/fs/inotify/max_user_watches && watchman shutdown-server"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.8",
@@ -26,12 +27,13 @@
     "react-google-maps": "^9.4.5",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-app-intro-slider": "^4.0.4",
+    "react-native-awesome-alerts": "^1.5.2",
     "react-native-check-box": "^2.1.7",
     "react-native-elements": "^3.4.2",
     "react-native-fast-image": "^8.5.11",
     "react-native-image-picker": "^3.3.2",
     "react-native-image-slider-box": "^1.1.8",
-    "react-native-maps": "^0.27.1",
+    "react-native-maps": "0.28.0",
     "react-native-paper": "^4.9.2",
     "react-native-radio-buttons-group": "^2.2.5",
     "react-native-raw-bottom-sheet": "^2.2.0",
@@ -41,6 +43,7 @@
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "^0.17.1",
     "react-native-web-maps": "^0.3.0",
+    "react-native-web-swiper": "^2.2.1",
     "react-native-webview": "11.6.2"
   },
   "devDependencies": {

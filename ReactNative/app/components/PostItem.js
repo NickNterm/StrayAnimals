@@ -9,20 +9,24 @@ import {
   Share,
   StyleSheet,
 } from "react-native";
-
+import AwesomeAlert from "react-native-awesome-alerts";
 import { EvilIcons } from "@expo/vector-icons";
 import { format } from "date-fns";
+import { Clipboard } from "react-native";
+import Swiper from "react-native-web-swiper";
 var SliderBox;
 
 import colors from "../config/colors";
 
 import firebase from "../database/Firebase.js";
 import { Platform } from "react-native";
+import { Dimensions } from "react-native";
 if (Platform.OS !== "web") {
   SliderBox = require("react-native-image-slider-box").SliderBox;
 }
 function PostItem(props) {
   const { item, currentUser, navigation, bottomSheet } = props;
+  const [showAlert, setAlert] = React.useState(false);
   const [like, setLiked] = React.useState(
     item.likeIdList.includes(currentUser)
   );
@@ -47,6 +51,8 @@ function PostItem(props) {
         duration: 200,
         useNativeDriver: true,
       }).start(() => {
+        console.log("likelist " + item.likeIdList.includes(currentUser));
+        console.log("like " + like);
         if (!like && !item.likeIdList.includes(currentUser)) {
           item.likeIdList.push(currentUser);
           db.collection("Posts")
@@ -57,9 +63,10 @@ function PostItem(props) {
           db.collection("Posts")
             .doc(item.id)
             .update({ likeIdList: item.likeIdList });
+        } else {
+          console.log("ELSE");
         }
         setLiked(!like);
-
         Animated.timing(animationValue, {
           toValue: 1.1,
           duration: 200,
@@ -169,20 +176,20 @@ function PostItem(props) {
           </Text>
         </View>
       </TouchableWithoutFeedback>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          backCount++;
-          if (backCount == 2) {
-            clearTimeout(backTimer);
-            scaleAnimation();
-          } else {
-            backTimer = setTimeout(() => {
-              backCount = 0;
-            }, 300);
-          }
-        }}
-      >
-        {Platform.OS !== "web" ? (
+      {Platform.OS !== "web" ? (
+        <TouchableWithoutFeedback
+          onPress={() => {
+            backCount++;
+            if (backCount == 2) {
+              clearTimeout(backTimer);
+              scaleAnimation();
+            } else {
+              backTimer = setTimeout(() => {
+                backCount = 0;
+              }, 300);
+            }
+          }}
+        >
           <SliderBox
             resizeMode="cover"
             cache="force-cache"
@@ -199,14 +206,42 @@ function PostItem(props) {
               margin: 0,
             }}
           />
-        ) : (
-          <Image
+        </TouchableWithoutFeedback>
+      ) : (
+        <View style={{ aspectRatio: 4 / 5 }}>
+          <Swiper
+            minDistanceForAction={0.1}
+            controlsProps={{
+              dotsTouchable: true,
+              nextTitleStyle: {
+                position: "absolute",
+                top: Dimensions.get("window").height,
+                bottom: -Dimensions.get("window").height,
+              },
+              dotActiveStyle: { backgroundColor: colors.primary },
+              prevTitleStyle: {
+                position: "absolute",
+                top: Dimensions.get("window").height,
+                bottom: -Dimensions.get("window").height,
+              },
+            }}
+            controlsEnabled={item.image.length > 1}
+          >
+            {item.image.map((image) => (
+              <Image
+                resizeMode="cover"
+                style={styles.postImage}
+                source={{ uri: image, cache: "force-cache" }}
+              />
+            ))}
+          </Swiper>
+        </View>
+        /*  <Image
             resizeMode="cover"
             style={styles.postImage}
             source={{ uri: item.image[0], cache: "force-cache" }}
-          />
-        )}
-      </TouchableWithoutFeedback>
+          />*/
+      )}
 
       <View style={styles.underPhotoView}>
         {currentUser != null ? (
@@ -238,7 +273,21 @@ function PostItem(props) {
               style={{ marginStart: 5 }}
             />
           </TouchableWithoutFeedback>
-        ) : null}
+        ) : (
+          <TouchableWithoutFeedback
+            onPress={() => {
+              Clipboard.setString("strayanimalsapp.web.app/?post=" + item.id);
+              setAlert(true);
+            }}
+          >
+            <EvilIcons
+              name="share-google"
+              color={"#000"}
+              size={36}
+              style={{ marginStart: 5 }}
+            />
+          </TouchableWithoutFeedback>
+        )}
         <View style={styles.bottomButtons}>
           <TouchableWithoutFeedback onPress={showLocation}>
             <EvilIcons name="location" color={"#000"} size={36} />
@@ -259,6 +308,22 @@ function PostItem(props) {
           {postTimeInText(item.postedTime)}
         </Text>
       </View>
+      <AwesomeAlert
+        show={showAlert}
+        title="Copied to ClipBoard"
+        message={"strayanimalsapp.web.app/?post=" + item.id}
+        closeOnTouchOutside={true}
+        closeOnHardwareBackPress={true}
+        showConfirmButton={true}
+        confirmText="Thanks!"
+        confirmButtonColor={colors.primary}
+        onCancelPressed={() => {
+          setAlert(false);
+        }}
+        onConfirmPressed={() => {
+          setAlert(false);
+        }}
+      />
     </View>
   );
 }

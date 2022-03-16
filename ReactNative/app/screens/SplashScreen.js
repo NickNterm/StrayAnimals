@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Image, View, StyleSheet, Text, StatusBar } from "react-native";
+import {
+  Image,
+  View,
+  StyleSheet,
+  Text,
+  StatusBar,
+  Platform,
+} from "react-native";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import colors from "../config/colors";
@@ -15,57 +22,87 @@ function SplashScreen({ navigation }) {
         const value = await AsyncStorage.getItem("ShowIntro");
         if (value !== null) {
           var removeListener = firebase.auth().onAuthStateChanged((user) => {
+            var showPost = false;
             if (user) {
-              db.collection("Posts")
-                .limit(100)
-                .orderBy("postedTime")
-                .get()
-                .then((querySnapshot) => {
-                  querySnapshot
-                    .docChanges()
-                    .reverse()
-                    .forEach((doc) => {
-                      var post = doc.doc.data();
-                      post.id = doc.doc.id;
-                      postList.push(post);
-                    });
-                  db.collection("Users")
-                    .doc(user.uid)
-                    .get()
-                    .then((mUser) => {
-                      navigation.replace("MainScreen", {
-                        postList: postList,
-                        user: mUser.data(),
+              if (Platform.OS === "web") {
+                const queryParams = new URLSearchParams(window.location.search);
+                var postToShow = queryParams.get("post");
+                if (postToShow != null) {
+                  showPost = true;
+                }
+              }
+              console.log(showPost);
+              if (showPost) {
+                navigation.replace("Post", {
+                  postID: postToShow,
+                  user: user.uid,
+                });
+              } else {
+                db.collection("Posts")
+                  .limit(100)
+                  .orderBy("postedTime")
+                  .get()
+                  .then((querySnapshot) => {
+                    querySnapshot
+                      .docChanges()
+                      .reverse()
+                      .forEach((doc) => {
+                        var post = doc.doc.data();
+                        post.id = doc.doc.id;
+                        postList.push(post);
                       });
-                      removeListener();
-                    });
-                })
-                .catch((error) => {
-                  console.log("Error getting documents: ", error);
-                });
-            } else {
-              db.collection("Posts")
-                .limit(100)
-                .orderBy("postedTime")
-                .get()
-                .then((querySnapshot) => {
-                  querySnapshot
-                    .docChanges()
-                    .reverse()
-                    .forEach((doc) => {
-                      var post = doc.doc.data();
-                      post.id = doc.doc.id;
-                      postList.push(post);
-                    });
-                  navigation.replace("MainScreen", {
-                    postList: postList,
-                    user: null,
+                    db.collection("Users")
+                      .doc(user.uid)
+                      .get()
+                      .then((mUser) => {
+                        navigation.replace("MainScreen", {
+                          postList: postList,
+                          user: mUser.data(),
+                        });
+                        removeListener();
+                      });
+                  })
+                  .catch((error) => {
+                    console.log("Error getting documents: ", error);
                   });
-                  removeListener();
-                })
-                .catch((error) => {
-                  console.log("Error getting documents: ", error);
+              }
+            } else {
+              if (Platform.OS === "web") {
+                const queryParams = new URLSearchParams(window.location.search);
+                var postToShow = queryParams.get("post");
+                if (postToShow != null) {
+                  showPost = true;
+                }
+              }
+              if (showPost) {
+                navigation.replace("Post", {
+                  postID: postToShow,
+                  user: null,
                 });
+              } else {
+                db.collection("Posts")
+                  .limit(100)
+                  .orderBy("postedTime")
+                  .get()
+                  .then((querySnapshot) => {
+                    querySnapshot
+                      .docChanges()
+                      .reverse()
+                      .forEach((doc) => {
+                        var post = doc.doc.data();
+                        post.id = doc.doc.id;
+                        postList.push(post);
+                      });
+                    navigation.replace("MainScreen", {
+                      postList: postList,
+                      user: null,
+                    });
+                    removeListener();
+                  })
+                  .catch((error) => {
+                    console.log("Error getting documents: ", error);
+                  });
+              }
             }
           });
         } else {
