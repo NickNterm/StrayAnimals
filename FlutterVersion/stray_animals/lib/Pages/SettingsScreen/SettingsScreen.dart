@@ -18,13 +18,13 @@ class SettingsScreen extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           child: ListView(
             children: [
-              ListTile(
+              /*ListTile(
                 onTap: () {},
                 leading: const Icon(Icons.account_circle_rounded),
                 title: const Text("Edit Account"),
                 trailing: const Icon(Icons.navigate_next_rounded),
               ),
-              const Divider(),
+              const Divider(),*/
               ListTile(
                 onTap: () {
                   UrlLauncher.launch("mailto:strayanimalsdeveloper@gmail.com");

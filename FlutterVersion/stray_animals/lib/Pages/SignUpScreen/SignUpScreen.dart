@@ -1,9 +1,15 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stray_animals/Components/Buttons/FilledButton.dart';
 import 'package:stray_animals/Components/Buttons/StrokeButton.dart';
 import 'package:stray_animals/Components/Texts/BoldText.dart';
 import 'package:stray_animals/Components/Texts/NormalText.dart';
 import 'package:stray_animals/Constants/colors.dart';
+import 'package:stray_animals/Constants/profileImages.dart';
+import 'package:stray_animals/Pages/LoadingScreen/LoadingScreen.dart';
 import 'package:stray_animals/Pages/SignInScreen/SignInScreen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -21,7 +27,79 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    void signUp() {}
+    void signUp() {
+      if (usernameController.text.isEmpty) {
+        const snackBar = SnackBar(
+            content: Text(
+          'Please Enter Username',
+          style: TextStyle(fontFamily: "Ubuntu"),
+        ));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else if (emailController.text.isEmpty) {
+        const snackBar = SnackBar(
+            content: Text(
+          'Please Enter Email',
+          style: TextStyle(fontFamily: "Ubuntu"),
+        ));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else if (phoneController.text.isEmpty) {
+        const snackBar = SnackBar(
+            content: Text(
+          'Please Enter Phone',
+          style: TextStyle(fontFamily: "Ubuntu"),
+        ));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else if (confirmController.text.isEmpty ||
+          passwordController.text.isEmpty) {
+        const snackBar = SnackBar(
+            content: Text(
+          "Please Enter Password",
+          style: TextStyle(fontFamily: "Ubuntu"),
+        ));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else if (confirmController.text != passwordController.text) {
+        const snackBar = SnackBar(
+            content: Text(
+          "Passwords don't match",
+          style: TextStyle(fontFamily: "Ubuntu"),
+        ));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      } else {
+        FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+                email: emailController.text, password: passwordController.text)
+            .then((userCredential) {
+          FirebaseFirestore.instance
+              .collection("Users")
+              .doc(userCredential.user!.uid)
+              .set({
+            "block": 0,
+            "email": emailController.text,
+            "id": userCredential.user!.uid,
+            "name": usernameController.text,
+            "phone": phoneController.text,
+            "photo":
+                profileImageList[Random().nextInt(profileImageList.length)],
+            "showPhone": true
+          }).then(
+            (value) => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const LoadingScreen(),
+              ),
+            ),
+          );
+        }).catchError((error, stackTrace) {
+          SnackBar snackBar = SnackBar(
+              content: Text(
+            error?.message,
+            style: TextStyle(fontFamily: "Ubuntu"),
+          ));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        });
+      }
+    }
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
