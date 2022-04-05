@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:stray_animals/Components/Buttons/FilledButton.dart';
 import 'package:stray_animals/Components/GeneralComponents/ShowMarkerOnMap.dart';
+import 'package:stray_animals/Components/SnackBar/SnackBar.dart';
 import 'package:stray_animals/Components/Texts/BoldText.dart';
 import 'package:stray_animals/Components/Texts/SubtitleText.dart';
 import 'package:stray_animals/Constants/colors.dart';
@@ -11,6 +13,7 @@ import 'package:stray_animals/Objects/Account.dart';
 import 'package:stray_animals/Objects/Location.dart';
 import 'package:stray_animals/Pages/SelectLocationScreen/SelectLocationScreen.dart';
 import 'package:stray_animals/Pages/UploadScreen/Object/ExtraInformation.dart';
+import 'package:heic_to_jpg/heic_to_jpg.dart';
 
 class UploadScreen extends StatefulWidget {
   const UploadScreen({Key? key, required this.user}) : super(key: key);
@@ -29,6 +32,7 @@ class _UploadScreenState extends State<UploadScreen> {
   TextEditingController genderController = TextEditingController();
   TextEditingController microchipController = TextEditingController();
   List<ExtraInformationObject> extraFields = [];
+  bool loading = false;
   void pickImages() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       withData: true,
@@ -39,7 +43,18 @@ class _UploadScreenState extends State<UploadScreen> {
     List<PlatformFile> fileList = [];
     if (result != null) {
       for (var file in result.files) {
-        fileList.add(file);
+        if (file.extension == 'heic') {
+          //print(file.bytes);
+          var myfile =
+              PlatformFile(name: file.name, size: file.size, bytes: file.bytes);
+          print(myfile.path);
+          // String? jpegPath = await HeicToJpg.convert(file.path!);
+          // file = PlatformFile(path: jpegPath, name: file.name, size: file.size);
+          //print(file.bytes);
+          fileList.add(file);
+        } else {
+          fileList.add(file);
+        }
       }
     }
     setState(() {
@@ -48,6 +63,9 @@ class _UploadScreenState extends State<UploadScreen> {
   }
 
   void uploadPost() {
+    setState(() {
+      loading = true;
+    });
     if (imageList.isNotEmpty) {
       if (descriptionController.text != "") {
         if (location != null) {
@@ -115,43 +133,44 @@ class _UploadScreenState extends State<UploadScreen> {
                           "postedTime": DateTime.now().millisecondsSinceEpoch,
                           "rated": 0,
                         }).then((value) {
-                          // here do something more
-                          const snackBar = SnackBar(
-                              content: Text(
-                            'Done',
-                            style: TextStyle(fontFamily: "Ubuntu"),
-                          ));
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          FirebaseMessaging messaging =
+                              FirebaseMessaging.instance;
+                          messaging.sendMessage(
+                            data: {"title": "test title", "body": "Test Body"},
+                          );
+                          setState(() {
+                            loading = false;
+                          });
+                          showErrorOnSnackbar(context, "Done");
                         });
                       }
                     },
                   ),
                 )
-                .onError((error, stackTrace) {});
+                .catchError((error, stackTrace) {
+              showErrorOnSnackbar(context, error?.message);
+              setState(() {
+                loading = false;
+              });
+            });
           }
         } else {
-          const snackBar = SnackBar(
-              content: Text(
-            'Please Select Location',
-            style: TextStyle(fontFamily: "Ubuntu"),
-          ));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          setState(() {
+            loading = false;
+          });
+          showErrorOnSnackbar(context, "Please Select Loction");
         }
       } else {
-        const snackBar = SnackBar(
-            content: Text(
-          'Please fill Description',
-          style: TextStyle(fontFamily: "Ubuntu"),
-        ));
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        setState(() {
+          loading = false;
+        });
+        showErrorOnSnackbar(context, "Please Enter Description");
       }
     } else {
-      const snackBar = SnackBar(
-          content: Text(
-        'Select at least one image',
-        style: TextStyle(fontFamily: "Ubuntu"),
-      ));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      setState(() {
+        loading = false;
+      });
+      showErrorOnSnackbar(context, "Pick At Least One Image");
     }
   }
 
@@ -183,7 +202,7 @@ class _UploadScreenState extends State<UploadScreen> {
                       },
                       child: Container(
                         margin: const EdgeInsets.all(10),
-                        width: size.width * 0.6,
+                        width: 300,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: Colors.grey[300],
@@ -428,6 +447,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     },
                     text: 'Upload',
                     width: size.width,
+                    loading: loading,
                   ),
                   const SizedBox(
                     height: 100,

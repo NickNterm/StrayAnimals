@@ -9,6 +9,7 @@ import 'package:stray_animals/Components/Texts/BoldText.dart';
 import 'package:stray_animals/Components/Texts/NormalText.dart';
 import 'package:stray_animals/Components/Texts/SubtitleText.dart';
 import 'package:stray_animals/Constants/colors.dart';
+import 'package:stray_animals/Constants/size.dart';
 import 'package:stray_animals/Objects/Account.dart';
 import 'package:stray_animals/Objects/Location.dart';
 import 'package:stray_animals/Objects/Post.dart';
@@ -77,100 +78,109 @@ class _PostScreenState extends State<PostScreen> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Text(widget.user.name),
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 300,
-              child: PageView.builder(
-                controller: controller,
-                scrollDirection: Axis.horizontal,
-                itemCount: widget.post.images.length,
-                itemBuilder: (context, index) => Container(
-                  margin: const EdgeInsets.fromLTRB(10, 20, 10, 30),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: const Offset(0, 5),
-                        blurRadius: 8,
-                        color: Colors.grey.withOpacity(1),
-                      )
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: CachedNetworkImage(
-                      height: 300,
-                      width: size.width,
-                      imageUrl: widget.post.images[index],
-                      fit: BoxFit.cover,
+      body: Container(
+        width: size.width,
+        alignment: Alignment.topCenter,
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: maxWidth,
+          ),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 300,
+                  child: PageView.builder(
+                    controller: controller,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: widget.post.images.length,
+                    itemBuilder: (context, index) => Container(
+                      margin: const EdgeInsets.fromLTRB(10, 20, 10, 30),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            offset: const Offset(0, 5),
+                            blurRadius: 8,
+                            color: Colors.grey.withOpacity(1),
+                          )
+                        ],
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: CachedNetworkImage(
+                          height: 300,
+                          width: size.width,
+                          imageUrl: widget.post.images[index],
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                const Divider(),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      LikeButton(
+                          controller: _controller,
+                          currIndex: _currIndex,
+                          changeState: changeLike),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(widget.post.likes.length.toString()),
+                      const Spacer(),
+                      SubtitleText(text: parseTimeStamp(post.postTime))
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const BoldText(
+                        text: "Description",
+                        size: 22,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      NormalText(
+                        text: post.description,
+                        size: 17,
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      post.extra != null
+                          ? ShowExtraDetailsInGrid(post: post)
+                          : Container(),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const BoldText(
+                        text: "Location",
+                        size: 22,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      ShowMarkerOnMap(location: post.location),
+                      const SizedBox(
+                        height: 50,
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
-            const Divider(),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  LikeButton(
-                      controller: _controller,
-                      currIndex: _currIndex,
-                      changeState: changeLike),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(widget.post.likes.length.toString()),
-                  const Spacer(),
-                  SubtitleText(text: parseTimeStamp(post.postTime))
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const BoldText(
-                    text: "Description",
-                    size: 22,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  NormalText(
-                    text: post.description,
-                    size: 17,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  post.extra != null
-                      ? ShowExtraDetailsInGrid(post: post)
-                      : Container(),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const BoldText(
-                    text: "Location",
-                    size: 22,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  ShowMarkerOnMap(location: post.location),
-                  const SizedBox(
-                    height: 50,
-                  )
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

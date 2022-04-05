@@ -64,25 +64,27 @@ class _PostListTileState extends State<PostListTile> {
             SizedBox(
               width: 15,
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                NormalText(text: widget.user.name),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 150,
-                  child: Text(
-                    widget.post.description,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.ubuntu(
-                      textStyle: TextStyle(
-                        fontSize: 16,
-                        fontStyle: FontStyle.italic,
-                        color: kSecondaryTextColor,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  NormalText(text: widget.user.name),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width - 150,
+                    child: Text(
+                      widget.post.description,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.ubuntu(
+                        textStyle: TextStyle(
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                          color: kSecondaryTextColor,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           ],
         ),

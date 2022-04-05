@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -27,16 +28,37 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
   <title>stray_animals</title>
   <link rel="manifest" href="manifest.json">
 </head>
+
 <body>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
   <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyBIjKRttnKNMgPk5s8kvfeOo_DkR_PiPxM",
+      authDomain: "strayanimalsapp.firebaseapp.com",
+      projectId: "strayanimalsapp",
+      storageBucket: "strayanimalsapp.appspot.com",
+      messagingSenderId: "783963393864",
+      appId: "1:783963393864:web:c5b09e1d60a6ae0530ed7d",
+      measurementId: "G-QJ4C7L9L7K"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig)
+  </script>
+  <script>
+    window.flutterWebRenderer = "html";
     var serviceWorkerVersion = null;
     var scriptLoaded = false;
     function loadMainDartJs() {
@@ -101,4 +123,5 @@
     }
   </script>
 </body>
+
 </html>

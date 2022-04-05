@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stray_animals/Constants/colors.dart';
+import 'package:stray_animals/Constants/size.dart';
 import 'package:stray_animals/Objects/Account.dart';
 import 'package:stray_animals/Objects/Post.dart';
 import 'package:stray_animals/Objects/Shelter.dart';
@@ -114,10 +116,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
             });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    if (firebaseAuth.currentUser != null) {
+  void initData() async {
+    if (await FirebaseAuth.instance.authStateChanges().first != null) {
       firestore
           .collection("Users")
           .doc(firebaseAuth.currentUser!.uid)
@@ -141,52 +141,82 @@ class _LoadingScreenState extends State<LoadingScreen> {
     }
   }
 
+  void initNotification() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initData();
+    initNotification();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Image.asset(
-                  "assets/icons/adaptive-icon.png",
-                  width: size.width * 0.4,
-                ),
+        child: Container(
+          width: size.width,
+          alignment: Alignment.topCenter,
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: maxWidth,
+            ),
+            child: Center(
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Image.asset(
+                      "assets/icons/adaptive-icon.png",
+                      width: size.width * 0.4,
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: const [
+                        Text(
+                          "Stray Animals",
+                          style: TextStyle(
+                              fontSize: 38, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          "Let's transform our society\nin a place where animals will\nbe treated with care",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Expanded(
+                    flex: 1,
+                    child: SpinKitWave(
+                      color: kPrimaryColor,
+                      size: 50.0,
+                    ),
+                  )
+                ],
               ),
-              Expanded(
-                flex: 1,
-                child: Column(
-                  children: const [
-                    Text(
-                      "Stray Animals",
-                      style:
-                          TextStyle(fontSize: 38, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Let's transform our society\nin a place where animals will\nbe treated with care",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Expanded(
-                flex: 1,
-                child: SpinKitWave(
-                  color: kPrimaryColor,
-                  size: 50.0,
-                ),
-              )
-            ],
+            ),
           ),
         ),
       ),

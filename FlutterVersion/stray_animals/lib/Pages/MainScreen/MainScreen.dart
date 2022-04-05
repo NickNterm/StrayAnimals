@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stray_animals/Constants/size.dart';
 import 'package:stray_animals/Objects/Account.dart';
 import 'package:stray_animals/Objects/Post.dart';
 import 'package:stray_animals/Objects/Shelter.dart';
@@ -68,15 +69,25 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Stack(
-          children: [
-            pages[currentIndex],
-            CustomNavigationBar(
-              currentIndex: currentIndex,
-              changeNavPage: changeNavPage,
-            )
-          ],
-        ));
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        alignment: Alignment.topCenter,
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: maxWidth,
+          ),
+          child: Stack(
+            children: [
+              pages[currentIndex],
+              CustomNavigationBar(
+                currentIndex: currentIndex,
+                changeNavPage: changeNavPage,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

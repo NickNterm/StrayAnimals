@@ -1,5 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:stray_animals/Constants/colors.dart';
+import 'package:stray_animals/Constants/size.dart';
 
 class CustomNavigationBar extends StatelessWidget {
   const CustomNavigationBar({
@@ -16,11 +18,17 @@ class CustomNavigationBar extends StatelessWidget {
       bottom: 0,
       left: 0,
       child: SizedBox(
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery.of(context).size.width < maxWidth
+            ? MediaQuery.of(context).size.width
+            : maxWidth,
         height: 80,
         child: Stack(children: [
           CustomPaint(
-            size: Size(MediaQuery.of(context).size.width, 80),
+            size: Size(
+                MediaQuery.of(context).size.width < maxWidth
+                    ? MediaQuery.of(context).size.width
+                    : maxWidth,
+                80),
             painter: NavigationPainter(),
           ),
           Center(
@@ -34,7 +42,9 @@ class CustomNavigationBar extends StatelessWidget {
             ),
           ),
           Container(
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery.of(context).size.width < maxWidth
+                ? MediaQuery.of(context).size.width
+                : maxWidth,
             height: 80,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -56,7 +66,9 @@ class CustomNavigationBar extends StatelessWidget {
                   color: currentIndex == 1 ? kPrimaryColor : Colors.grey,
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.2,
+                  width: MediaQuery.of(context).size.width < maxWidth
+                      ? MediaQuery.of(context).size.width * 0.2
+                      : maxWidth * 0.2,
                 ),
                 IconButton(
                   onPressed: () {

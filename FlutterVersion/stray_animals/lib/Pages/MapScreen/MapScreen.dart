@@ -120,21 +120,21 @@ class _MapScreenState extends State<MapScreen> {
   Widget selectedElement() {
     if (elementToShow == null) {
       return Container();
-    } else if (elementToShow.runtimeType.toString() == "Shelter") {
+    } else if (elementToShow.runtimeType == Shelter) {
       return Positioned(
         bottom: 90,
         left: 0,
         right: 0,
         child: ShelterListTile(shelter: elementToShow),
       );
-    } else if (elementToShow.runtimeType.toString() == "Veterinarian") {
+    } else if (elementToShow.runtimeType == Veterinarian) {
       return Positioned(
         bottom: 90,
         left: 0,
         right: 0,
         child: VeterinarianListTile(veterinarian: elementToShow),
       );
-    } else if (elementToShow.runtimeType.toString() == "Post") {
+    } else if (elementToShow.runtimeType == Post) {
       return Positioned(
         bottom: 90,
         left: 0,
@@ -181,7 +181,7 @@ class _MapScreenState extends State<MapScreen> {
                             shelterList.length];
                   }
                 });
-                if (elementToShow.runtimeType.toString() == "Post") {
+                if (elementToShow.runtimeType == Post) {
                   firestore
                       .collection("Users")
                       .doc(elementToShow.userId)
@@ -199,7 +199,6 @@ class _MapScreenState extends State<MapScreen> {
                     });
                   });
                 }
-                print(elementToShow.runtimeType);
               },
               maxClusterRadius: 10,
               size: const Size(40, 40),

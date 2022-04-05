@@ -4,6 +4,7 @@ import 'package:stray_animals/Components/modelView/PostCard.dart';
 import 'package:stray_animals/Components/Texts/BoldText.dart';
 import 'package:stray_animals/Components/Texts/NormalText.dart';
 import 'package:stray_animals/Constants/colors.dart';
+import 'package:stray_animals/Constants/size.dart';
 import 'package:stray_animals/Objects/Account.dart';
 import 'package:stray_animals/Objects/Location.dart';
 import 'package:stray_animals/Objects/Post.dart';
@@ -100,39 +101,49 @@ class _AccountScreenState extends State<AccountScreen> {
         ],
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 60,
-                        backgroundImage: NetworkImage(widget.user.profileImage),
+        child: Container(
+          width: size.width,
+          alignment: Alignment.topCenter,
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: maxWidth,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 60,
+                            backgroundImage:
+                                NetworkImage(widget.user.profileImage),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          BoldText(
+                            text: widget.user.name,
+                            size: 24,
+                          )
+                        ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      BoldText(
-                        text: widget.user.name,
-                        size: 24,
-                      )
-                    ],
+                    ),
                   ),
-                ),
+                  PostLengthAndContact(postList: postList, user: user),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const BoldText(
+                    text: "Posts",
+                    size: 20,
+                  ),
+                  PostListScroll(postList: postList),
+                ],
               ),
-              PostLengthAndContact(postList: postList, user: user),
-              const SizedBox(
-                height: 10,
-              ),
-              const BoldText(
-                text: "Posts",
-                size: 20,
-              ),
-              PostListScroll(postList: postList),
-            ],
+            ),
           ),
         ),
       ),

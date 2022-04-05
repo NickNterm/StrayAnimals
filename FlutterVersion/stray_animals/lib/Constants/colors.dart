@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const kPrimaryColor = Color(0xFFC2927B);
 const kTextColor = Color(0xFF3C4046);
 const kSecondaryTextColor = Color(0xFF686868);
-const kBackgroundColor = Color(0xFFF9F8FD);
+const kBackgroundColor = Color(0xFFFFFFFF);
 const kDividerColor = Color.fromARGB(255, 200, 200, 200);
 Map<int, Color> color = {
   50: Color(0xFFC2927B),
